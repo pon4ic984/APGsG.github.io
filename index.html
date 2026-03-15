@@ -3,1451 +3,471 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APGsG Gaming Community - Найди свою команду</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>APGsG Gaming Community — Найди свою команду</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="https://i.ibb.co/2YmkKV7G/source-v2.png">
-    
-    <!-- SEO Мета-теги -->
-    <meta name="description" content="APGsG - Discord сервер для поиска тиммейтов в CS:GO, Dota 2, Valorant, Apex Legends и другие игры. Присоединяйся к нашему игровому сообществу!">
-    <meta name="keywords" content="APGsG, Discord сервер, поиск тиммейтов, найти команду, CS:GO, Dota 2, Valorant, игровое сообщество">
-    <meta name="author" content="APGsG Gaming Community">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="description" content="APGsG — Discord сервер для поиска тиммейтов в CS2, Dota 2, Valorant, Apex Legends и другие игры.">
+    <meta name="keywords" content="APGsG, Discord, поиск тиммейтов, найти команду, CS2, Dota 2, Valorant">
     <style>
-        /* Базовая защита от копирования */
-        body {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        
-        input, textarea {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
-
-        /* ВАШ ПОЛНЫЙ ОРИГИНАЛЬНЫЙ CSS */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* ========== СБРОС И ПЕРЕМЕННЫЕ ========== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary: #0066FF;
-            --primary-dark: #0052CC;
-            --primary-darker: #003366;
-            --accent: #00FF44;
-            --accent-dark: #00CC36;
-            --dark-bg: #0A0F1C;
-            --dark-surface: #111827;
-            --dark-card: #1A2332;
-            --dark-border: #2D3748;
-            --text-primary: #F7FAFC;
-            --text-secondary: #CBD5E0;
-            --text-muted: #718096;
-            --success: #00FF44;
-            --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            --gradient-accent: linear-gradient(135deg, var(--primary), var(--accent));
-            --shadow: 0 8px 32px rgba(0, 102, 255, 0.15);
-            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --primary: #6C5CE7;
+            --primary-light: #A29BFE;
+            --primary-dark: #5A4BD1;
+            --accent: #00F5D4;
+            --accent-blue: #00BBF9;
+            --neon-pink: #FF006E;
+            --neon-orange: #FB5607;
+            --dark-bg: #08090D;
+            --dark-surface: #0E1017;
+            --dark-card: #14161E;
+            --dark-card-2: #1A1D28;
+            --dark-border: rgba(255,255,255,0.06);
+            --dark-border-hover: rgba(108,92,231,0.4);
+            --text-primary: #EEEEF2;
+            --text-secondary: #9B9DB0;
+            --text-muted: #5F6175;
             --radius: 16px;
+            --radius-md: 12px;
             --radius-sm: 8px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--dark-bg);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
+        input, textarea, select { -webkit-user-select: text; user-select: text; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-        }
-
-        h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-        }
-
-        h3 {
-            font-size: 1.5rem;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        h1, h2, h3, h4, h5 { font-weight: 700; line-height: 1.2; }
+        h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+        h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+        h3 { font-size: 1.25rem; }
         .text-gradient {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
 
+        /* ========== ФОНОВЫЕ ЭФФЕКТЫ ========== */
+        .bg-effects {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .bg-orb {
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        .bg-orb-1 { width: 500px; height: 500px; background: var(--primary); top: -10%; right: -5%; animation-delay: 0s; }
+        .bg-orb-2 { width: 400px; height: 400px; background: var(--accent); bottom: -10%; left: -5%; animation-delay: -7s; }
+        .bg-orb-3 { width: 300px; height: 300px; background: var(--neon-pink); top: 40%; left: 30%; animation-delay: -14s; opacity: 0.06; }
+        @keyframes orbFloat {
+            0%,100%{ transform:translate(0,0) scale(1); }
+            25%{ transform:translate(30px,-40px) scale(1.05); }
+            50%{ transform:translate(-20px,30px) scale(0.95); }
+            75%{ transform:translate(40px,20px) scale(1.02); }
+        }
+        .bg-grid {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background-image: linear-gradient(rgba(108,92,231,0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(108,92,231,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* ========== ХЕДЕР ========== */
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 15, 28, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--dark-border);
-            z-index: 1000;
-            padding: 1rem 0;
-            transition: var(--transition);
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 1rem 0;
+            transition: var(--transition); background: transparent;
         }
-
-        .scrolled {
-            background: rgba(10, 15, 28, 0.98);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        header.scrolled {
+            background: rgba(8,9,13,0.92); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--dark-border); padding: 0.7rem 0;
         }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); font-weight: 800; font-size: 1.4rem; }
+        .logo-img { height: 40px; border-radius: 10px; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: var(--transition); position: relative; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+            background: var(--primary); border-radius: 2px; transition: var(--transition);
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-
-        .logo-img {
-            height: 42px;
-            width: auto;
-            border-radius: 8px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-            .nav-links a {
-                color: var(--text-secondary);
-                text-decoration: none;
-                font-weight: 500;
-                transition: var(--transition);
-                position: relative;
-            }
-
-                .nav-links a:hover {
-                    color: var(--text-primary);
-                }
-
-                .nav-links a::after {
-                    content: '';
-                    position: absolute;
-                    bottom: -5px;
-                    left: 0;
-                    width: 0;
-                    height: 2px;
-                    background: var(--primary);
-                    transition: var(--transition);
-                }
-
-                .nav-links a:hover::after {
-                    width: 100%;
-                }
-
-        .nav-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-right { display: flex; gap: 0.8rem; align-items: center; }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px;
+            border-radius: var(--radius-sm); text-decoration: none; font-weight: 600; font-size: 0.9rem;
+            transition: var(--transition); border: none; cursor: pointer; font-family: inherit;
         }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-            box-shadow: var(--shadow);
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: 0 4px 15px rgba(108,92,231,0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(108,92,231,0.4); }
+        .btn-secondary { background: rgba(255,255,255,0.05); color: var(--text-primary); border: 1px solid var(--dark-border); }
+        .btn-secondary:hover { border-color: var(--primary); background: rgba(108,92,231,0.08); }
+        .btn-glow {
+            background: linear-gradient(135deg, var(--primary), var(--accent-blue)); color: white;
+            padding: 14px 32px; font-size: 1rem; border-radius: var(--radius-md);
+            box-shadow: 0 0 25px rgba(108,92,231,0.3);
         }
+        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 0 45px rgba(108,92,231,0.5); }
+        .btn-discord { background: #5865F2; color: white; box-shadow: 0 4px 15px rgba(88,101,242,0.3); }
+        .btn-discord:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(88,101,242,0.4); }
 
-            .btn-primary:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 12px 40px rgba(0, 102, 255, 0.3);
-            }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 2px solid var(--dark-border);
+        .theme-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--dark-border); color: var(--text-muted);
+            width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: var(--transition); font-size: 0.9rem;
         }
+        .theme-btn:hover { color: var(--primary-light); border-color: var(--primary); }
 
-            .btn-secondary:hover {
-                border-color: var(--primary);
-                background: rgba(0, 102, 255, 0.1);
-            }
+        .mobile-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.3rem; cursor: pointer; }
 
-        .hero {
-            padding: 160px 0 100px;
-            position: relative;
-            overflow: hidden;
-        }
-
-            .hero::before {
-                content: '';
-                position: absolute;
-                top: -50%;
-                right: -10%;
-                width: 600px;
-                height: 600px;
-                background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, transparent 70%);
-                border-radius: 50%;
-                z-index: -1;
-            }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
+        /* ========== HERO ========== */
+        .hero { position: relative; z-index: 1; padding: 140px 0 100px; min-height: 100vh; display: flex; align-items: center; }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: center; }
         .hero-badge {
-            display: inline-block;
-            background: rgba(0, 102, 255, 0.1);
-            color: var(--primary);
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 102, 255, 0.3);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(108,92,231,0.1); border: 1px solid rgba(108,92,231,0.2);
+            color: var(--primary-light); padding: 8px 16px; border-radius: 50px;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem;
         }
+        .badge-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: dotPulse 2s ease-in-out infinite; }
+        @keyframes dotPulse { 0%,100%{opacity:1; transform:scale(1);} 50%{opacity:0.4; transform:scale(0.8);} }
+        .hero-title { margin-bottom: 1.2rem; }
+        .hero-desc { color: var(--text-secondary); font-size: 1.1rem; max-width: 500px; margin-bottom: 2rem; line-height: 1.8; }
 
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin: 2rem 0;
+        .stats-row {
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+            background: rgba(255,255,255,0.04); border-radius: var(--radius-md); overflow: hidden;
+            margin-bottom: 2rem; border: 1px solid var(--dark-border);
         }
+        .stat-box { padding: 1.2rem; text-align: center; background: var(--dark-card); transition: var(--transition); }
+        .stat-box:hover { background: var(--dark-card-2); }
+        .stat-val { display: block; font-size: 1.8rem; font-weight: 800; color: var(--primary-light); margin-bottom: 2px; }
+        .stat-lbl { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
 
-        .stat {
-            text-align: center;
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .search-bar { display: flex; gap: 0.6rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .search-input {
+            flex:1; min-width:200px; padding:10px 16px; background:var(--dark-card); border:1px solid var(--dark-border);
+            border-radius:var(--radius-sm); color:var(--text-primary); font-family:inherit; font-size:0.9rem; transition:var(--transition);
         }
+        .search-input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(108,92,231,0.1); }
+        .btn-random { background:linear-gradient(135deg,var(--accent),var(--accent-blue)); color:var(--dark-bg); font-weight:700; border:none; padding:10px 20px; border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition); }
+        .btn-random:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,245,212,0.3); }
 
-        .stat-number {
-            display: block;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+        .widget-card {
+            background:var(--dark-card); border:1px solid var(--dark-border); border-radius:var(--radius); padding:1.8rem;
+            position:relative; transition:var(--transition); overflow:hidden;
         }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        .widget-card::before {
+            content:''; position:absolute; top:0; left:0; right:0; height:3px;
+            background:linear-gradient(90deg, var(--primary), var(--accent), var(--accent-blue));
         }
-
-        .hero-visual {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .widget-card:hover { transform:translateY(-5px); border-color:var(--dark-border-hover); box-shadow:0 20px 50px rgba(0,0,0,0.3); }
+        .wc-header { display:flex; align-items:center; gap:12px; margin-bottom:1.2rem; }
+        .wc-avatar { width:50px; height:50px; border-radius:50%; overflow:hidden; border:2px solid var(--primary); flex-shrink:0; }
+        .wc-avatar img { width:100%; height:100%; object-fit:cover; }
+        .wc-name { font-size:1.1rem; font-weight:700; }
+        .wc-sub { color:var(--text-muted); font-size:0.8rem; }
+        .wc-online {
+            display:flex; align-items:center; gap:8px; background:rgba(0,245,212,0.06); border:1px solid rgba(0,245,212,0.12);
+            border-radius:var(--radius-sm); padding:8px 12px; margin-bottom:1.2rem;
         }
-
-        .discord-widget {
-            background: var(--dark-card);
-            border-radius: var(--radius);
-            padding: 2rem;
-            border: 1px solid var(--dark-border);
-            box-shadow: var(--shadow-lg);
-            width: 100%;
-            max-width: 400px;
-            transition: var(--transition);
+        .online-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; animation:dotPulse 2s ease-in-out infinite; flex-shrink:0; }
+        .wc-online span { color:var(--accent); font-size:0.85rem; font-weight:500; }
+        .wc-channels { display:flex; flex-direction:column; gap:2px; }
+        .wc-ch {
+            display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:var(--radius-sm);
+            font-size:0.85rem; color:var(--text-secondary); transition:var(--transition); cursor:pointer;
         }
-
-            .discord-widget:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-            }
-
-        .server-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+        .wc-ch:hover { background:rgba(255,255,255,0.03); color:var(--text-primary); }
+        .wc-ch-icon {
+            width:20px; height:20px; background:rgba(108,92,231,0.12); border-radius:5px;
+            display:flex; align-items:center; justify-content:center; font-size:0.65rem; color:var(--primary-light); flex-shrink:0;
         }
+        .wc-footer { margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--dark-border); display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; }
+        .wc-footer-left { color:var(--text-muted); }
+        .wc-activity-tag { padding:3px 10px; border-radius:20px; font-weight:600; font-size:0.75rem; }
 
-        .server-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+        /* ========== СЕКЦИИ ========== */
+        .section { position:relative; z-index:1; padding:100px 0; }
+        .section-alt { background:var(--dark-surface); }
+        .section-header { text-align:center; margin-bottom:3.5rem; }
+        .section-header h2 { margin-bottom:0.8rem; }
+        .section-header p { color:var(--text-muted); max-width:520px; margin:0 auto; font-size:1rem; }
+        .section-line { width:50px; height:3px; background:linear-gradient(90deg,var(--primary),var(--accent)); border-radius:3px; margin:1rem auto 0; }
 
-        .server-info h3 {
-            margin-bottom: 0.25rem;
-        }
-
-        .server-info p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .online-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin: 1rem 0;
-            padding: 0.5rem;
-            background: rgba(0, 255, 68, 0.1);
-            border-radius: var(--radius-sm);
-            border: 1px solid rgba(0, 255, 68, 0.3);
-        }
-
-        .online-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        .channel-list {
-            margin-top: 1rem;
-        }
-
-        .channel {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            border-radius: var(--radius-sm);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-            .channel:hover {
-                background: rgba(255, 255, 255, 0.05);
-            }
-
-        .channel-icon {
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-        }
-
-        .real-time-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--dark-card);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            border: 1px solid var(--dark-border);
-            margin-top: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            flex: 1;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label-large {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .stat-divider {
-            width: 1px;
-            height: 40px;
-            background: var(--dark-border);
-        }
-
-        .features {
-            padding: 100px 0;
-            background: var(--dark-surface);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-            .section-header h2 {
-                margin-bottom: 1rem;
-            }
-
-            .section-header p {
-                color: var(--text-muted);
-                max-width: 600px;
-                margin: 0 auto;
-            }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
+        .features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
         .feature-card {
-            background: var(--dark-card);
-            padding: 2rem;
-            border-radius: var(--radius);
-            border: 1px solid var(--dark-border);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
+            background:var(--dark-card); padding:1.8rem; border-radius:var(--radius);
+            border:1px solid var(--dark-border); transition:var(--transition); position:relative;
         }
+        .feature-card:hover { transform:translateY(-4px); border-color:rgba(108,92,231,0.25); box-shadow:0 10px 40px rgba(0,0,0,0.2); }
+        .f-icon { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:1rem; }
+        .f-icon-1 { background:rgba(108,92,231,0.1); }
+        .f-icon-2 { background:rgba(0,245,212,0.1); }
+        .f-icon-3 { background:rgba(0,187,249,0.1); }
+        .f-icon-4 { background:rgba(255,0,110,0.1); }
+        .f-icon-5 { background:rgba(251,86,7,0.1); }
+        .f-icon-6 { background:rgba(0,245,100,0.1); }
+        .feature-card h3 { margin-bottom:0.6rem; font-size:1.1rem; }
+        .feature-card p { color:var(--text-secondary); font-size:0.9rem; line-height:1.6; }
 
-            .feature-card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 3px;
-                background: var(--gradient);
-            }
-
-            .feature-card:hover {
-                transform: translateY(-5px);
-                box-shadow: var(--shadow-lg);
-            }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 102, 255, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            border: 2px solid rgba(0, 102, 255, 0.3);
-        }
-
-        .feature-card h3 {
-            margin-bottom: 1rem;
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-        }
-
-        .games {
-            padding: 100px 0;
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
+        .games-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:1.2rem; }
         .game-card {
-            background: var(--dark-card);
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            text-align: center;
-            border: 1px solid var(--dark-border);
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            background:var(--dark-card); border-radius:var(--radius-md); border:1px solid var(--dark-border);
+            overflow:hidden; transition:var(--transition); cursor:pointer;
         }
+        .game-card:hover { transform:translateY(-6px); border-color:var(--primary); box-shadow:0 15px 40px rgba(0,0,0,0.3); }
+        .game-thumb { position:relative; overflow:hidden; aspect-ratio:16/10; }
+        .game-thumb img { width:100%; height:100%; object-fit:cover; transition:var(--transition); }
+        .game-card:hover .game-thumb img { transform:scale(1.08); }
+        .game-thumb-overlay { position:absolute; bottom:0; left:0; right:0; height:50%; background:linear-gradient(transparent,var(--dark-card)); pointer-events:none; }
+        .game-body { padding:0.7rem 1rem 1rem; }
+        .game-body h4 { font-size:0.9rem; font-weight:600; }
 
-            .game-card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: var(--gradient);
-                opacity: 0;
-                transition: var(--transition);
-                z-index: 0;
-            }
-
-            .game-card:hover {
-                transform: translateY(-5px);
-                border-color: var(--primary);
-                box-shadow: var(--shadow);
-            }
-
-                .game-card:hover::before {
-                    opacity: 0.05;
-                }
-
-        .game-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1rem;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: var(--dark-bg);
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        .community-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
+        .comm-card {
+            background:var(--dark-card); border-radius:var(--radius); padding:2rem 1.5rem; text-align:center;
+            border:1px solid var(--dark-border); transition:var(--transition);
         }
+        .comm-card:hover { transform:translateY(-4px); border-color:rgba(108,92,231,0.2); box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+        .comm-icon { width:56px; height:56px; border-radius:50%; margin:0 auto 1rem; display:flex; align-items:center; justify-content:center; font-size:1.4rem; background:rgba(108,92,231,0.08); }
+        .comm-val { font-size:2.2rem; font-weight:800; color:var(--primary-light); margin-bottom:0.3rem; }
+        .comm-lbl { color:var(--text-muted); font-size:0.85rem; }
 
-            .game-icon img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 8px;
-            }
-
-        .game-card h4 {
-            position: relative;
-            z-index: 1;
+        .steps-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; position:relative; }
+        .steps-grid::before {
+            content:''; position:absolute; top:40px; left:17%; right:17%; height:2px;
+            background:linear-gradient(90deg,var(--primary),var(--accent)); opacity:0.2;
         }
-
-        .steps {
-            padding: 100px 0;
-            background: var(--dark-surface);
+        .step-card { text-align:center; position:relative; }
+        .step-num {
+            width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--accent-blue));
+            display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; font-size:1.3rem;
+            font-weight:800; color:white; box-shadow:0 0 25px rgba(108,92,231,0.25); position:relative; z-index:2;
         }
+        .step-card h3 { margin-bottom:0.6rem; }
+        .step-card p { color:var(--text-secondary); font-size:0.9rem; }
 
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            counter-reset: step-counter;
-        }
-
-        .step {
-            background: var(--dark-card);
-            padding: 2rem;
-            border-radius: var(--radius);
-            border: 1px solid var(--dark-border);
-            position: relative;
-            transition: var(--transition);
-        }
-
-            .step:hover {
-                transform: translateY(-3px);
-                box-shadow: var(--shadow);
-            }
-
-            .step::before {
-                counter-increment: step-counter;
-                content: counter(step-counter);
-                position: absolute;
-                top: -20px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 40px;
-                height: 40px;
-                background: var(--gradient);
-                color: white;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: 700;
-                font-size: 1.1rem;
-                box-shadow: var(--shadow);
-            }
-
-        .step-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 102, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 1rem auto;
-            font-size: 1.25rem;
-            border: 2px solid rgba(0, 102, 255, 0.3);
-        }
-
-        .step h3 {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .step p {
-            text-align: center;
-            color: var(--text-secondary);
-        }
-
-        .community-stats {
-            padding: 100px 0;
-            background: var(--dark-bg);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-card {
-            background: var(--dark-card);
-            padding: 2rem;
-            border-radius: var(--radius);
-            text-align: center;
-            border: 1px solid var(--dark-border);
-            transition: var(--transition);
-        }
-
-            .stat-card:hover {
-                transform: translateY(-5px);
-                box-shadow: var(--shadow);
-            }
-
-        .stat-card-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 1.5rem;
-            border-radius: 50%;
-            background: rgba(0, 102, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            border: 2px solid rgba(0, 102, 255, 0.3);
-        }
-
-        .stat-card-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-card-label {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .cta {
-            padding: 100px 0;
-            background: var(--gradient);
-            color: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-            .cta::before {
-                content: '';
-                position: absolute;
-                top: -50%;
-                left: -50%;
-                width: 200%;
-                height: 200%;
-                background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-                animation: rotate 20s linear infinite;
-            }
-
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .cta h2 {
-            margin-bottom: 1rem;
-        }
-
-        .cta p {
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta .btn {
-            background: white;
-            color: var(--primary);
-            border: 2px solid white;
-        }
-
-            .cta .btn:hover {
-                background: transparent;
-                color: white;
-            }
-
-        .info-sections {
-            padding: 100px 0;
-            background: var(--dark-bg);
-        }
-
-        .info-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            justify-content: center;
-        }
-
+        .info-tabs { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:2rem; justify-content:center; }
         .info-tab {
-            padding: 12px 24px;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
+            padding:8px 20px; background:var(--dark-card); border:1px solid var(--dark-border); border-radius:50px;
+            cursor:pointer; font-weight:500; font-size:0.85rem; color:var(--text-secondary); transition:var(--transition);
+            font-family:inherit;
         }
+        .info-tab.active { background:var(--primary); color:white; border-color:var(--primary); }
+        .info-tab:hover:not(.active) { border-color:var(--primary); color:var(--text-primary); }
+        .info-box { background:var(--dark-card); border-radius:var(--radius); padding:2.5rem; border:1px solid var(--dark-border); }
+        .info-section { display:none; }
+        .info-section.active { display:block; animation:fadeIn 0.4s ease; }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
+        .info-section h3 { color:var(--primary-light); margin-bottom:1rem; }
+        .info-section p { color:var(--text-secondary); margin-bottom:0.8rem; line-height:1.7; }
+        .info-section ul { margin:0.8rem 0; padding-left:1.5rem; }
+        .info-section li { color:var(--text-secondary); margin-bottom:0.5rem; }
 
-            .info-tab.active {
-                background: var(--primary);
-                color: white;
-                border-color: var(--primary);
-            }
-
-            .info-tab:hover:not(.active) {
-                border-color: var(--primary);
-                background: rgba(0, 102, 255, 0.1);
-            }
-
-        .info-content {
-            background: var(--dark-card);
-            border-radius: var(--radius);
-            padding: 3rem;
-            border: 1px solid var(--dark-border);
+        .feedback-form {
+            background: var(--dark-card-2);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
+        .rating-input { display:flex; align-items:center; gap:5px; margin-bottom:1rem; }
+        .star { font-size:1.8rem; cursor:pointer; color:var(--text-muted); transition:color 0.2s; }
+        .star.active, .star:hover { color:#ffc107; }
+        .rating-value { margin-left:10px; font-weight:600; color:var(--primary-light); }
+        .feedback-form .form-group { margin-bottom:1rem; }
+        .feedback-form textarea { width:100%; padding:12px 16px; background:var(--dark-bg); border:1px solid var(--dark-border); border-radius:var(--radius-sm); color:var(--text-primary); font-size:0.95rem; resize:vertical; min-height:80px; }
+        .feedback-form button { width:100%; justify-content:center; margin-top:0.5rem; }
+        .auth-message { color:var(--text-muted); font-size:0.8rem; margin-top:0.5rem; text-align:center; }
 
-        .info-section {
-            display: none;
+        .comments-list { display:flex; flex-direction:column; gap:1rem; }
+        .comment-card {
+            background:var(--dark-card); border:1px solid var(--dark-border); border-radius:var(--radius-md);
+            padding:1.2rem 1.5rem; transition:var(--transition);
         }
+        .comment-card:hover { border-color:var(--primary-light); transform:translateX(4px); }
+        .comment-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; font-size:0.9rem; }
+        .comment-name { font-weight:600; color:var(--primary-light); }
+        .comment-date { color:var(--text-muted); font-size:0.8rem; }
+        .comment-rating { margin-bottom:0.5rem; color:#ffc107; }
+        .stars { letter-spacing:2px; font-size:1.1rem; }
+        .comment-text { color:var(--text-secondary); line-height:1.6; font-size:0.95rem; }
+        .admin-actions { margin-top:0.8rem; display:flex; gap:8px; }
+        .admin-actions button { background:rgba(255,255,255,0.1); border:1px solid var(--dark-border); color:var(--text-secondary); padding:4px 10px; border-radius:var(--radius-sm); cursor:pointer; transition:var(--transition); font-size:0.8rem; }
+        .admin-actions button:hover { border-color:var(--primary); color:var(--text-primary); }
+        .loading { text-align:center; color:var(--text-muted); padding:2rem; }
 
-            .info-section.active {
-                display: block;
-                animation: fadeIn 0.5s ease;
-            }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .admin-panel {
+            position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:3000;
+            display:none; align-items:center; justify-content:center;
         }
-
-        .info-section h3 {
-            margin-bottom: 1.5rem;
-            color: var(--primary);
+        .admin-panel-content {
+            background:var(--dark-card); padding:2rem; border-radius:var(--radius); max-width:600px;
+            width:90%; max-height:80vh; overflow-y:auto;
         }
+        .admin-panel-content h3 { margin-bottom:1rem; }
+        .admin-comment-item { border-bottom:1px solid var(--dark-border); padding:10px 0; }
+        .admin-comment-item:last-child { border-bottom:none; }
 
-        .info-section p {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .info-section ul {
-            margin: 1rem 0;
-            padding-left: 1.5rem;
-        }
-
-        .info-section li {
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-        }
-
-        .contact-form {
-            display: grid;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-            .form-group label {
-                font-weight: 500;
-                color: var(--text-primary);
-            }
-
-            .form-group input,
-            .form-group textarea,
-            .form-group select {
-                padding: 12px 16px;
-                background: var(--dark-bg);
-                border: 1px solid var(--dark-border);
-                border-radius: var(--radius-sm);
-                color: var(--text-primary);
-                font-family: inherit;
-                transition: var(--transition);
-            }
-
-                .form-group input:focus,
-                .form-group textarea:focus,
-                .form-group select:focus {
-                    outline: none;
-                    border-color: var(--primary);
-                    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-                }
-
-            .form-group textarea {
-                resize: vertical;
-                min-height: 120px;
-            }
-
-        footer {
-            background: var(--dark-surface);
-            padding: 60px 0 30px;
-            border-top: 1px solid var(--dark-border);
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-
-        .footer-logo-img {
-            height: 40px;
-            width: auto;
-            border-radius: 8px;
-        }
-
-        .footer-links {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .footer-column h4 {
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-column a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-            .footer-column a:hover {
-                color: var(--text-primary);
-            }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
+        /* ========== FOOTER ========== */
+        footer { position:relative; z-index:1; background:var(--dark-surface); padding:50px 0 20px; border-top:1px solid var(--dark-border); }
+        .footer-grid { display:grid; grid-template-columns:1.5fr 2fr; gap:3rem; margin-bottom:2.5rem; }
+        .footer-info { display:flex; flex-direction:column; gap:0.8rem; }
+        .footer-desc { color:var(--text-muted); font-size:0.9rem; max-width:300px; }
+        .social-links { display:flex; gap:0.6rem; margin-top:0.3rem; }
         .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--dark-card);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            transition: var(--transition);
+            width:38px; height:38px; border-radius:50%; background:var(--dark-card); border:1px solid var(--dark-border);
+            display:flex; align-items:center; justify-content:center; color:var(--text-muted); text-decoration:none;
+            transition:var(--transition);
         }
+        .social-link:hover { background:#5865F2; border-color:#5865F2; color:white; transform:translateY(-2px); }
+        .footer-links-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+        .footer-col h4 { margin-bottom:0.8rem; font-size:0.95rem; }
+        .footer-col ul { list-style:none; }
+        .footer-col li { margin-bottom:0.4rem; }
+        .footer-col a { color:var(--text-muted); text-decoration:none; font-size:0.85rem; transition:var(--transition); cursor:pointer; }
+        .footer-col a:hover { color:var(--primary-light); }
+        .footer-bottom { border-top:1px solid var(--dark-border); padding-top:1.5rem; text-align:center; color:var(--text-muted); font-size:0.8rem; }
 
-            .social-link:hover {
-                background: var(--primary);
-                color: white;
-                transform: translateY(-3px);
-            }
-
-        .footer-bottom {
-            border-top: 1px solid var(--dark-border);
-            padding-top: 2rem;
-            text-align: center;
-            color: var(--text-muted);
+        /* ========== ПЛАВАЮЩИЕ ЭЛЕМЕНТЫ ========== */
+        .scroll-top-btn {
+            position:fixed; bottom:24px; right:24px; width:44px; height:44px; background:var(--primary); color:white;
+            border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;
+            transition:var(--transition); opacity:0; visibility:hidden; z-index:100; border:none; font-size:1rem;
+            box-shadow:0 4px 15px rgba(108,92,231,0.3);
         }
+        .scroll-top-btn.visible { opacity:1; visibility:visible; }
+        .scroll-top-btn:hover { transform:translateY(-3px); }
 
-        @media (max-width: 968px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-links {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .info-content {
-                padding: 2rem;
-            }
+        .discord-fab {
+            position:fixed; bottom:24px; left:24px; width:52px; height:52px; background:#5865F2; color:white;
+            border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+            z-index:100; transition:var(--transition); text-decoration:none; box-shadow:0 4px 15px rgba(88,101,242,0.3);
         }
+        .discord-fab:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 8px 25px rgba(88,101,242,0.5); }
 
-        @media (max-width: 768px) {
-            .hero-stats {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .games-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .steps-container {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links {
-                grid-template-columns: 1fr;
-            }
-
-            .real-time-stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .stat-divider {
-                display: none;
-            }
-
-            .info-tabs {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+        .notif {
+            position:fixed; top:85px; right:24px; background:var(--dark-card); border:1px solid var(--dark-border);
+            border-radius:var(--radius-md); padding:1rem 1.3rem; box-shadow:0 15px 50px rgba(0,0,0,0.4);
+            z-index:1001; transform:translateX(400px); transition:var(--transition); max-width:320px;
         }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-
-            .games-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .nav-actions {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-
-            .info-content {
-                padding: 1.5rem;
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-            .fade-in.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-        .stagger > * {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        .stagger.visible > * {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-            .stagger.visible > *:nth-child(1) {
-                transition-delay: 0.1s;
-            }
-
-            .stagger.visible > *:nth-child(2) {
-                transition-delay: 0.2s;
-            }
-
-            .stagger.visible > *:nth-child(3) {
-                transition-delay: 0.3s;
-            }
-
-            .stagger.visible > *:nth-child(4) {
-                transition-delay: 0.4s;
-            }
-
-            .stagger.visible > *:nth-child(5) {
-                transition-delay: 0.5s;
-            }
-
-            .stagger.visible > *:nth-child(6) {
-                transition-delay: 0.6s;
-            }
-
-        .scroll-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-            opacity: 0;
-            visibility: hidden;
-            box-shadow: var(--shadow);
-            z-index: 100;
-        }
-
-            .scroll-to-top.visible {
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .scroll-to-top:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 10px 25px rgba(0, 102, 255, 0.3);
-            }
+        .notif.active { transform:translateX(0); }
+        .notif-header { display:flex; align-items:center; gap:8px; margin-bottom:4px; }
+        .notif-dot { width:8px; height:8px; background:var(--accent); border-radius:50%; }
+        .notif h4 { font-size:0.9rem; }
+        .notif p { color:var(--text-secondary); font-size:0.82rem; }
 
         .game-popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
+            position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(6px);
+            display:flex; align-items:center; justify-content:center; z-index:2000;
+            opacity:0; visibility:hidden; transition:var(--transition);
         }
-
-            .game-popup.active {
-                opacity: 1;
-                visibility: visible;
-            }
-
-        .game-popup-content {
-            background: var(--dark-card);
-            border-radius: var(--radius);
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            transform: translateY(20px);
-            transition: var(--transition);
+        .game-popup.active { opacity:1; visibility:visible; }
+        .popup-box {
+            background:var(--dark-card); border:1px solid var(--dark-border); border-radius:var(--radius);
+            padding:2rem; max-width:440px; width:90%; text-align:center; position:relative;
+            transform:translateY(20px) scale(0.96); transition:var(--transition);
         }
-
-        .game-popup.active .game-popup-content {
-            transform: translateY(0);
+        .game-popup.active .popup-box { transform:translateY(0) scale(1); }
+        .popup-close {
+            position:absolute; top:12px; right:12px; background:rgba(255,255,255,0.05); border:none;
+            color:var(--text-muted); width:32px; height:32px; border-radius:50%; display:flex;
+            align-items:center; justify-content:center; cursor:pointer; transition:var(--transition);
         }
+        .popup-close:hover { background:rgba(255,0,0,0.1); color:#ff6b6b; }
+        .popup-img { width:100px; height:100px; border-radius:var(--radius-md); overflow:hidden; margin:0 auto 1.2rem; box-shadow:0 8px 25px rgba(0,0,0,0.3); }
+        .popup-img img { width:100%; height:100%; object-fit:cover; }
+        .game-popup h3 { color:var(--primary-light); margin-bottom:0.6rem; font-size:1.3rem; }
+        .game-popup p { color:var(--text-secondary); margin-bottom:1.5rem; font-size:0.9rem; }
 
-        .game-popup-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+        /* ========== АНИМАЦИИ ========== */
+        .fade-up { opacity:0; transform:translateY(30px); transition:all 0.6s ease; }
+        .fade-up.visible { opacity:1; transform:translateY(0); }
+        .stagger > * { opacity:0; transform:translateY(20px); transition:all 0.5s ease; }
+        .stagger.visible > * { opacity:1; transform:translateY(0); }
+        .stagger.visible > *:nth-child(1) { transition-delay:0.05s; }
+        .stagger.visible > *:nth-child(2) { transition-delay:0.1s; }
+        .stagger.visible > *:nth-child(3) { transition-delay:0.15s; }
+        .stagger.visible > *:nth-child(4) { transition-delay:0.2s; }
+        .stagger.visible > *:nth-child(5) { transition-delay:0.25s; }
+        .stagger.visible > *:nth-child(6) { transition-delay:0.3s; }
 
-            .game-popup-close:hover {
-                color: var(--text-primary);
-            }
-
-        .game-popup-icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 16px;
-            overflow: hidden;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-            .game-popup-icon img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-        .game-popup h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .game-popup p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .game-popup .btn {
-            margin: 0 auto;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        @media (max-width: 968px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-
+        @media (max-width:1024px) {
+            .hero-grid { grid-template-columns:1fr; text-align:center; gap:3rem; }
+            .hero-desc { margin-left:auto; margin-right:auto; }
+            .hero-btns { justify-content:center; }
+            .search-bar { justify-content:center; }
+            .widget-card { max-width:380px; margin:0 auto; }
+            .features-grid { grid-template-columns:repeat(2,1fr); }
+            .community-grid { grid-template-columns:repeat(2,1fr); }
+            .mobile-toggle { display:block; }
             .nav-links {
-                position: fixed;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background: var(--dark-card);
-                flex-direction: column;
-                padding: 2rem;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: var(--transition);
-                z-index: 999;
+                position:fixed; top:70px; left:0; width:100%; background:rgba(14,16,23,0.97); backdrop-filter:blur(20px);
+                flex-direction:column; padding:1.5rem 2rem; transform:translateY(-120%); opacity:0;
+                transition:var(--transition); z-index:999; border-bottom:1px solid var(--dark-border); gap:1.2rem;
             }
-
-                .nav-links.active {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
+            .nav-links.active { transform:translateY(0); opacity:1; }
+            .footer-grid { grid-template-columns:1fr; }
         }
-
-        .discord-float {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            width: 60px;
-            height: 60px;
-            background: #5865F2;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
-            z-index: 100;
-            transition: var(--transition);
-            text-decoration: none;
+        @media (max-width:768px) {
+            .features-grid { grid-template-columns:1fr; }
+            .games-grid { grid-template-columns:repeat(3,1fr); }
+            .steps-grid { grid-template-columns:1fr; gap:2rem; }
+            .steps-grid::before { display:none; }
+            .community-grid { grid-template-columns:1fr 1fr; }
+            .stats-row { grid-template-columns:1fr; }
+            .footer-links-grid { grid-template-columns:1fr 1fr; }
+            .info-box { padding:1.5rem; }
         }
-
-            .discord-float:hover {
-                transform: translateY(-3px) scale(1.1);
-                box-shadow: 0 8px 25px rgba(88, 101, 242, 0.6);
-            }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-            .theme-toggle:hover {
-                color: var(--text-primary);
-                background: rgba(255, 255, 255, 0.05);
-            }
-
-        .typing-effect {
-            overflow: hidden;
-            border-right: 2px solid var(--primary);
-            white-space: nowrap;
-            margin: 0 auto;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes typing {
-            from {
-                width: 0
-            }
-
-            to {
-                width: 100%
-            }
-        }
-
-        @keyframes blink-caret {
-            from, to {
-                border-color: transparent
-            }
-
-            50% {
-                border-color: var(--primary)
-            }
-        }
-
-        .game-search {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .search-input {
-            padding: 12px 16px;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-family: inherit;
-            transition: var(--transition);
-            min-width: 250px;
-        }
-
-            .search-input:focus {
-                outline: none;
-                border-color: var(--primary);
-                box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
-            }
-
-        .random-team-btn {
-            background: var(--gradient-accent);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-            .random-team-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 12px 40px rgba(0, 255, 68, 0.3);
-            }
-
-        .particles-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            background: var(--primary);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float 15s infinite linear;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-            }
-
-            100% {
-                transform: translateY(-1000px) translateX(1000px);
-            }
+        @media (max-width:480px) {
+            .games-grid { grid-template-columns:repeat(2,1fr); }
+            .community-grid { grid-template-columns:1fr; }
+            .footer-links-grid { grid-template-columns:1fr; }
+            .section { padding:70px 0; }
         }
 
         .theme-light {
-            --dark-bg: #F7FAFC;
-            --dark-surface: #EDF2F7;
+            --dark-bg: #F4F5F9;
+            --dark-surface: #EAECF2;
             --dark-card: #FFFFFF;
-            --dark-border: #E2E8F0;
-            --text-primary: #2D3748;
-            --text-secondary: #4A5568;
-            --text-muted: #718096;
+            --dark-card-2: #F8F9FC;
+            --dark-border: rgba(108,92,231,0.1);
+            --text-primary: #1A1B2E;
+            --text-secondary: #4A4B6A;
+            --text-muted: #7B7D96;
         }
-
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 30px;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: var(--radius);
-            padding: 1rem 1.5rem;
-            box-shadow: var(--shadow-lg);
-            z-index: 1000;
-            transform: translateX(400px);
-            transition: var(--transition);
-            max-width: 350px;
-        }
-
-            .notification.active {
-                transform: translateX(0);
-            }
-
-        .notification-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .notification-icon {
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-        }
-
-        .notification h4 {
-            font-size: 1rem;
-        }
-
-        .notification p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
+        .theme-light .bg-orb { opacity:0.06; }
+        .theme-light .bg-grid { opacity:0.5; }
     </style>
 </head>
 <body>
+    <div class="bg-effects">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+        <div class="bg-grid"></div>
+    </div>
+
     <header id="header">
         <div class="container nav-container">
             <a href="#home" class="logo">
                 <img src="https://i.ibb.co/2YmkKV7G/source-v2.png" alt="APGsG" class="logo-img">
                 <span>APGsG</span>
             </a>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Меню"><i class="fas fa-bars"></i></button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Главная</a></li>
                 <li><a href="#features">Возможности</a></li>
@@ -1455,905 +475,824 @@
                 <li><a href="#steps">Как начать</a></li>
                 <li><a href="#info">Информация</a></li>
             </ul>
-            <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <a href="#info" class="btn btn-secondary">Войти</a>
-                <a href="https://discord.gg/x7PH4TBJdt" class="btn btn-primary" target="_blank">Присоединиться</a>
+            <div class="nav-right">
+                <div id="authSection"></div>
+                <button class="theme-btn" id="themeToggle" aria-label="Переключить тему"><i class="fas fa-moon"></i></button>
+                <a href="https://discord.gg/x7PH4TBJdt" class="btn btn-discord" target="_blank"><i class="fab fa-discord"></i> Присоединиться</a>
             </div>
         </div>
     </header>
 
-    <div class="notification" id="notification">
-        <div class="notification-header">
-            <div class="notification-icon"><i class="fas fa-bell"></i></div>
-            <h4>Добро пожаловать в APGsG!</h4>
-        </div>
-        <p>Присоединяйся к нашему Discord-сообществу и найди свою команду!</p>
+    <div class="notif" id="notification">
+        <div class="notif-header"><div class="notif-dot"></div><h4>Добро пожаловать в APGsG!</h4></div>
+        <p>Присоединяйся к Discord и найди свою команду!</p>
     </div>
 
-    <a href="https://discord.gg/x7PH4TBJdt" class="discord-float" target="_blank">
-        <i class="fab fa-discord"></i>
-    </a>
+    <a href="https://discord.gg/x7PH4TBJdt" class="discord-fab" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
 
     <section id="home" class="hero">
-        <div class="particles-container" id="particlesContainer"></div>
-        <div class="container hero-content">
-            <div class="fade-in">
-                <span class="hero-badge">🎮 Активное игровое сообщество</span>
-                <h1>Найди свою <span class="text-gradient typing-effect">команду в APGsG</span></h1>
-                <p style="color: var(--text-secondary); margin: 1.5rem 0; font-size: 1.1rem;">
-                    Крупнейший Discord-сервер для геймеров. Находи тиммейтов, участвуй в турнирах и становись частью дружного сообщества.
-                </p>
-
-                <div class="real-time-stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="totalMembers">...</div>
-                        <div class="stat-label-large">Всего участников</div>
+        <div class="container">
+            <div class="hero-grid">
+                <div class="fade-up">
+                    <div class="hero-badge"><span class="badge-dot"></span>🎮 Активное игровое сообщество</div>
+                    <h1 class="hero-title">Найди свою <span class="text-gradient">команду в APGsG</span></h1>
+                    <p class="hero-desc">Крупнейший Discord-сервер для геймеров. Находи тиммейтов и становись частью дружного сообщества.</p>
+                    <div class="stats-row">
+                        <div class="stat-box"><span class="stat-val" id="totalMembers">...</span><span class="stat-lbl">Участников</span></div>
+                        <div class="stat-box"><span class="stat-val" id="onlineMembers">...</span><span class="stat-lbl">Онлайн</span></div>
+                        <div class="stat-box"><span class="stat-val" id="gamingMembers">...</span><span class="stat-lbl">В игре</span></div>
                     </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="onlineMembers">...</div>
-                        <div class="stat-label-large">Сейчас онлайн</div>
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="🔍 Поиск игры..." id="gameSearch">
+                        <button class="btn-random" id="randomTeamBtn"><i class="fas fa-dice"></i> Случайная</button>
                     </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="gamingMembers">...</div>
-                        <div class="stat-label-large">Играют сейчас</div>
+                    <div class="hero-btns">
+                        <a href="https://discord.gg/x7PH4TBJdt" class="btn btn-glow" target="_blank"><i class="fab fa-discord"></i> Присоединиться к серверу</a>
+                        <a href="#features" class="btn btn-secondary">Узнать больше <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
-
-                <div class="game-search">
-                    <input type="text" class="search-input" placeholder="Введите название игры...">
-                    <button class="random-team-btn" id="randomTeamBtn">
-                        <i class="fas fa-random"></i> Случайная команда
-                    </button>
-                </div>
-
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-                    <a href="https://discord.gg/x7PH4TBJdt" class="btn btn-primary" target="_blank">Присоединиться к серверу</a>
-                    <a href="#features" class="btn btn-secondary">Узнать больше</a>
-                </div>
-            </div>
-
-            <div class="hero-visual fade-in">
-                <div class="discord-widget">
-                    <div class="server-header">
-                        <div class="server-avatar">
-                            <img src="https://i.ibb.co/6JVWs9Rj/image.png" alt="APGsG Gaming" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                <div class="fade-up" style="transition-delay:0.15s">
+                    <div class="widget-card">
+                        <div class="wc-header">
+                            <div class="wc-avatar"><img src="https://i.ibb.co/6JVWs9Rj/image.png" alt="APGsG"></div>
+                            <div><div class="wc-name">APGsG Gaming</div><div class="wc-sub">Игровое сообщество</div></div>
                         </div>
-                        <div class="server-info">
-                            <h3 id="serverName">APGsG Gaming</h3>
-                            <p>Игровое сообщество</p>
+                        <div class="wc-online"><div class="online-dot"></div><span id="onlineText">Загрузка...</span></div>
+                        <div class="wc-channels">
+                            <div class="wc-ch"><div class="wc-ch-icon"><i class="fas fa-hashtag"></i></div>🔊 общий-чат</div>
+                            <div class="wc-ch"><div class="wc-ch-icon"><i class="fas fa-hashtag"></i></div>🎮 поиск-команды</div>
+                            <div class="wc-ch"><div class="wc-ch-icon"><i class="fas fa-hashtag"></i></div>📢 анонсы</div>
+                            <div class="wc-ch"><div class="wc-ch-icon"><i class="fas fa-volume-high"></i></div>🎙 Голосовой #1</div>
                         </div>
-                    </div>
-
-                    <div class="online-indicator">
-                        <div class="online-dot"></div>
-                        <span id="onlineText">...</span>
-                    </div>
-
-                    <div class="channel-list" id="channelList">
-                        <div class="channel">
-                            <div class="channel-icon">#</div>
-                            <span>🔊 общий-чат</span>
-                        </div>
-                        <div class="channel">
-                            <div class="channel-icon">#</div>
-                            <span>🎮 поиск-команды</span>
-                        </div>
-                        <div class="channel">
-                            <div class="channel-icon">#</div>
-                            <span>🏆 турниры</span>
-                        </div>
-                        <div class="channel">
-                            <div class="channel-icon">#</div>
-                            <span>📢 анонсы</span>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--dark-border);">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted);">
-                            <span>Активность сервера:</span>
-                            <span id="serverActivity" style="color: var(--accent);">Загрузка...</span>
-                        </div>
+                        <div class="wc-footer"><span class="wc-footer-left">Активность:</span><span class="wc-activity-tag" id="serverActivity">...</span></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="features" class="features">
+    <section id="features" class="section section-alt">
         <div class="container">
-            <div class="section-header fade-in">
-                <h2>Почему <span class="text-gradient">APGsG</span>?</h2>
-                <p>Мы создали идеальную платформу для геймеров, где каждый найдет то, что ищет</p>
-            </div>
-
+            <div class="section-header fade-up"><h2>Почему <span class="text-gradient">APGsG</span>?</h2><p>Идеальная платформа для геймеров</p><div class="section-line"></div></div>
             <div class="features-grid stagger">
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Активное сообщество</h3>
-                    <p>Тысячи активных игроков ежедневно. Находи команду для любых игр в любое время суток.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>Без токсичности</h3>
-                    <p>Строгая модерация и правила сообщества обеспечивают комфортную атмосферу для всех.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Быстрый поиск</h3>
-                    <p>Умная система подбора тиммейтов по рейтингу, стилю игры и предпочтениям.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🏆</div>
-                    <h3>Турниры и ивенты</h3>
-                    <p>Регулярные соревнования с призовыми фондами для игроков любого уровня.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Все популярные игры</h3>
-                    <p>От классических шутеров до новейших кооперативных проектов - есть раздел для каждой игры.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3>Голосовые комнаты</h3>
-                    <p>Качественные голосовые каналы с минимальной задержкой для комфортного общения.</p>
-                </div>
+                <div class="feature-card"><div class="f-icon f-icon-1">👥</div><h3>Активное сообщество</h3><p>Тысячи активных игроков ежедневно. Находи команду для любых игр в любое время суток.</p></div>
+                <div class="feature-card"><div class="f-icon f-icon-2">🛡️</div><h3>Без токсичности</h3><p>Строгая модерация и правила обеспечивают комфортную атмосферу для всех.</p></div>
+                <div class="feature-card"><div class="f-icon f-icon-3">⚡</div><h3>Быстрый поиск</h3><p>Умная система подбора тиммейтов по рейтингу, стилю игры и предпочтениям.</p></div>
+                <div class="feature-card"><div class="f-icon f-icon-4">🎯</div><h3>Все популярные игры</h3><p>От классических шутеров до кооперативных проектов — есть раздел для каждой игры.</p></div>
+                <div class="feature-card"><div class="f-icon f-icon-5">💬</div><h3>Голосовые комнаты</h3><p>Качественные голосовые каналы с минимальной задержкой.</p></div>
+                <div class="feature-card"><div class="f-icon f-icon-6">📢</div><h3>Регулярные обновления</h3><p>Постоянно добавляем новые игры и улучшаем сервер.</p></div>
             </div>
         </div>
     </section>
 
-    <section id="games" class="games">
+    <section id="games" class="section">
         <div class="container">
-            <div class="section-header fade-in">
-                <h2>Поддерживаемые <span class="text-gradient">игры</span></h2>
-                <p>Найди команду для своих любимых игр</p>
-            </div>
+            <div class="section-header fade-up"><h2>Поддерживаемые <span class="text-gradient">игры</span></h2><p>Найди команду для своих любимых игр</p><div class="section-line"></div></div>
+            <div class="games-grid stagger" id="gamesGrid"><div class="loading">Загрузка игр...</div></div>
+        </div>
+    </section>
 
-            <div class="games-grid stagger">
-                <div class="game-card" data-game="csgo">
-                    <div class="game-icon">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg" alt="CS:GO">
-                    </div>
-                    <h4>CS:GO</h4>
-                </div>
-                <div class="game-card" data-game="dota2">
-                    <div class="game-icon">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/570/header.jpg" alt="Dota 2">
-                    </div>
-                    <h4>Dota 2</h4>
-                </div>
-                <div class="game-card" data-game="apex">
-                    <div class="game-icon">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg" alt="Apex Legends">
-                    </div>
-                    <h4>Apex Legends</h4>
-                </div>
-                <div class="game-card" data-game="overwatch">
-                    <div class="game-icon">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/2357570/header.jpg" alt="Overwatch 2">
-                    </div>
-                    <h4>Overwatch 2</h4>
-                </div>
-                <div class="game-card" data-game="minecraft">
-                    <div class="game-icon">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1672970/header.jpg" alt="Minecraft">
-                    </div>
-                    <h4>Minecraft</h4>
-                </div>
-                <div class="game-card" data-game="fortnite">
-                    <div class="game-icon">
-                        <img src="https://cdn2.unrealengine.com/14br-consoles-1920x1080-wlogo-1920x1080-432974386.jpg" alt="Fortnite">
-                    </div>
-                    <h4>Fortnite</h4>
-                </div>
-                <div class="game-card" data-game="amongus">
-                    <div class="game-icon">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/945360/header.jpg" alt="Among Us">
-                    </div>
-                    <h4>Among Us</h4>
-                </div>
-                <div class="game-card" data-game="valorant">
-                    <div class="game-icon">
-                        <img src="https://i.pinimg.com/736x/cf/ae/88/cfae886e263126f685510e2f45b82970.jpg" alt="Valorant">
-                    </div>
-                    <h4>Valorant</h4>
-                </div>
-                <div class="game-card" data-game="lol">
-                    <div class="game-icon">
-                        <img src="https://newcdn.igromania.ru/editor/images/49/5127f3cc-89b1-4984-b245-f331f0014631.jpg" alt="League of Legends">
-                    </div>
-                    <h4>League of Legends</h4>
-                </div>
-                <div class="game-card" data-game="pubg">
-                    <div class="game-icon">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg" alt="PUBG">
-                    </div>
-                    <h4>PUBG</h4>
-                </div>
-                <div class="game-card" data-game="rainbow">
-                    <div class="game-icon">
-                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/359550/header.jpg" alt="Rainbow Six Siege">
-                    </div>
-                    <h4>Rainbow Six Siege</h4>
-                </div>
-                <div class="game-card" data-game="wow">
-                    <div class="game-icon">
-                        <img src="https://images.stopgame.ru/blogs/2019/06/30/IFgU8wcT.jpg" alt="World of Warcraft">
-                    </div>
-                    <h4>World of Warcraft</h4>
-                </div>
+    <section id="community" class="section section-alt">
+        <div class="container">
+            <div class="section-header fade-up"><h2>Наше <span class="text-gradient">сообщество</span></h2><p>Присоединяйся к тысячам игроков</p><div class="section-line"></div></div>
+            <div class="community-grid stagger">
+                <div class="comm-card"><div class="comm-icon">👥</div><div class="comm-val" id="communityTotal">...</div><div class="comm-lbl">Участников</div></div>
+                <div class="comm-card"><div class="comm-icon">🎮</div><div class="comm-val" id="gamesCount">24</div><div class="comm-lbl">Игр</div></div>
+                <div class="comm-card"><div class="comm-icon">💬</div><div class="comm-val">25+</div><div class="comm-lbl">Каналов</div></div>
+                <div class="comm-card"><div class="comm-icon">⭐</div><div class="comm-val" id="averageRating">4.9</div><div class="comm-lbl">Рейтинг</div></div>
             </div>
         </div>
     </section>
 
-    <section id="community" class="community-stats">
+    <section id="steps" class="section">
         <div class="container">
-            <div class="section-header fade-in">
-                <h2>Наше <span class="text-gradient">сообщество</span></h2>
-                <p>Присоединяйся к тысячам игроков, которые уже нашли своих тиммейтов</p>
-            </div>
-
-            <div class="stats-grid stagger">
-                <div class="stat-card">
-                    <div class="stat-card-icon">👥</div>
-                    <div class="stat-card-value" id="communityTotal">...</div>
-                    <div class="stat-card-label">Активных участников</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-card-icon">🎮</div>
-                    <div class="stat-card-value">12</div>
-                    <div class="stat-card-label">Поддерживаемых игр</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-card-icon">🏆</div>
-                    <div class="stat-card-value">50+</div>
-                    <div class="stat-card-label">Проведенных турниров</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-card-icon">⭐</div>
-                    <div class="stat-card-value">4.9/5</div>
-                    <div class="stat-card-label">Рейтинг сообщества</div>
-                </div>
+            <div class="section-header fade-up"><h2>Начать <span class="text-gradient">проще</span> простого</h2><p>Всего 3 шага до игры с новой командой</p><div class="section-line"></div></div>
+            <div class="steps-grid stagger">
+                <div class="step-card"><div class="step-num">1</div><h3>Присоединись</h3><p>Зайди на Discord-сервер через приглашение — это пара секунд</p></div>
+                <div class="step-card"><div class="step-num">2</div><h3>Настрой профиль</h3><p>Выбери свои игры и роли в канале #представься</p></div>
+                <div class="step-card"><div class="step-num">3</div><h3>Найди команду</h3><p>Используй тематические каналы для поиска игроков</p></div>
             </div>
         </div>
     </section>
 
-    <section id="steps" class="steps">
+    <section id="info" class="section section-alt">
         <div class="container">
-            <div class="section-header fade-in">
-                <h2>Начать <span class="text-gradient">проще</span> простого</h2>
-                <p>Всего 3 шага до игры с новой командой</p>
+            <div class="section-header fade-up"><h2>Информация о <span class="text-gradient">сообществе</span></h2><p>Всё что нужно знать о нашем сервере</p><div class="section-line"></div></div>
+            <div class="info-tabs fade-up">
+                <button class="info-tab active" data-tab="about">О нас</button>
+                <button class="info-tab" data-tab="rules">Правила</button>
+                <button class="info-tab" data-tab="moderation">Модерация</button>
+                <button class="info-tab" data-tab="help">Помощь</button>
+                <button class="info-tab" data-tab="contacts">Контакты</button>
+                <button class="info-tab" data-tab="faq">FAQ</button>
+                <button class="info-tab" data-tab="feedback">Отзыв</button>
             </div>
-
-            <div class="steps-container stagger">
-                <div class="step">
-                    <div class="step-icon">🚀</div>
-                    <h3>Присоединись</h3>
-                    <p>Нажми кнопку ниже и зайди на наш Discord-сервер через приглашение</p>
-                </div>
-
-                <div class="step">
-                    <div class="step-icon">📝</div>
-                    <h3>Настрой профиль</h3>
-                    <p>Выбери свои игры и роли в специальном канале #представься</p>
-                </div>
-
-                <div class="step">
-                    <div class="step-icon">🎯</div>
-                    <h3>Найди команду</h3>
-                    <p>Используй тематические каналы для поиска игроков под твои задачи</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="info" class="info-sections">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Информация о <span class="text-gradient">сообществе</span></h2>
-                <p>Вся необходимая информация о нашем Discord сервере</p>
-            </div>
-
-            <div class="info-tabs">
-                <div class="info-tab active" data-tab="about">О нас</div>
-                <div class="info-tab" data-tab="rules">Правила</div>
-                <div class="info-tab" data-tab="moderation">Модерация</div>
-                <div class="info-tab" data-tab="help">Помощь</div>
-                <div class="info-tab" data-tab="contacts">Контакты</div>
-                <div class="info-tab" data-tab="faq">FAQ</div>
-                <div class="info-tab" data-tab="feedback">Отправить отзыв</div>
-            </div>
-
-            <div class="info-content">
-                <div class="info-section active" id="about-content">
-                    <h3>О нашем сообществе</h3>
-                    <p>APGsG - это крупнейшее игровое сообщество Discord, созданное для объединения геймеров со всего мира. Мы предоставляем платформу для поиска тиммейтов, участия в турнирах и общения с единомышленниками.</p>
-                    <p>Наш сервер был создан в 2020 году и с тех пор объединил более 800 игроков. Мы гордимся нашей дружелюбной атмосферой и строгими правилами против токсичности.</p>
-                </div>
-
-                <div class="info-section" id="rules-content">
-                    <h3>Правила сообщества</h3>
-                    <p>Для поддержания дружелюбной атмосферы мы просим всех участников соблюдать следующие правила:</p>
-                    <ul>
-                        <li>Уважайте всех участников сообщества</li>
-                        <li>Запрещены оскорбления, дискриминация и токсичное поведение</li>
-                        <li>Не распространяйте личную информацию других пользователей</li>
-                        <li>Запрещен NSFW контент любого вида</li>
-                        <li>Спам и реклама без разрешения администрации запрещены</li>
-                    </ul>
-                </div>
-
-                <div class="info-section" id="moderation-content">
-                    <h3>Система модерации</h3>
-                    <p>Наша команда модераторов работает 24/7 для поддержания порядка на сервере.</p>
-                    <p>Уровни нарушений:</p>
-                    <ul>
-                        <li>1 нарушение - предупреждение</li>
-                        <li>2 нарушения - мут на 24 часа</li>
-                        <li>3 нарушения - мут на 7 дней</li>
-                        <li>4 нарушения - перманентный бан</li>
-                    </ul>
-                </div>
-
-                <div class="info-section" id="help-content">
-                    <h3>Помощь и поддержка</h3>
-                    <p>Если у вас возникли проблемы, вот как вы можете получить помощь:</p>
-                    <ul>
-                        <li>Технические проблемы: Обратитесь в #тех-поддержка</li>
-                        <li>Проблемы с пользователями: Напишите модераторам</li>
-                        <li>Предложения по улучшению: Используйте канал #предложения</li>
-                    </ul>
-                </div>
-
-                <div class="info-section" id="contacts-content">
-                    <h3>Контакты</h3>
-                    <p>Свяжитесь с нами через следующие каналы:</p>
-                    <ul>
-                        <li>Discord сервер: https://discord.gg/x7PH4TBJdt</li>
-                        <li>Email для сотрудничества: partnership@apgsg.com</li>
-                        <li>Техническая поддержка: support@apgsg.com</li>
-                    </ul>
-                </div>
-
-                <div class="info-section" id="faq-content">
-                    <h3>Часто задаваемые вопросы</h3>
-                    <p>
-                        Как присоединиться к серверу?<br>
-                        Нажмите кнопку "Присоединиться" вверху страницы или используйте прямую ссылку: https://discord.gg/x7PH4TBJdt
-                    </p>
-
-                    <p>
-                        Как найти тиммейтов?<br>
-                        Используйте каналы #поиск-команды для вашей игры или присоединяйтесь к голосовым каналам.
-                    </p>
-
-                    <p>
-                        Как участвовать в турнирах?<br>
-                        Следите за каналом #турниры и регистрируйтесь в указанные сроки.
-                    </p>
-                </div>
-
+            <div class="info-box fade-up">
+                <div class="info-section active" id="about-content"><h3>О нашем сообществе</h3><p>APGsG — крупнейшее игровое сообщество Discord, созданное для объединения геймеров со всего мира. Мы предоставляем платформу для поиска тиммейтов и общения.</p><p>Сервер создан в 2020 году и объединил более 800 игроков. Мы гордимся дружелюбной атмосферой и строгими правилами против токсичности.</p></div>
+                <div class="info-section" id="rules-content"><h3>Правила сообщества</h3><p>Для поддержания дружелюбной атмосферы:</p><ul><li>Уважайте всех участников сообщества</li><li>Запрещены оскорбления, дискриминация и токсичное поведение</li><li>Не распространяйте личную информацию других</li><li>Запрещён NSFW контент</li><li>Спам и реклама без разрешения запрещены</li></ul></div>
+                <div class="info-section" id="moderation-content"><h3>Система модерации</h3><p>Модераторы работают 24/7. Уровни нарушений:</p><ul><li>1 нарушение — предупреждение</li><li>2 нарушения — мут на 24 часа</li><li>3 нарушения — мут на 7 дней</li><li>4 нарушения — перманентный бан</li></ul></div>
+                <div class="info-section" id="help-content"><h3>Помощь и поддержка</h3><ul><li>Техпроблемы: канал #тех-поддержка</li><li>Проблемы с пользователями: пишите модераторам</li><li>Предложения: канал #предложения</li></ul></div>
+                <div class="info-section" id="contacts-content"><h3>Контакты</h3><ul><li>Discord: <a href="https://discord.gg/x7PH4TBJdt" target="_blank" style="color: var(--primary-light); text-decoration: none;">discord.gg/x7PH4TBJdt</a></li><li>Сотрудничество: partnership@apgsg.com</li><li>Поддержка: support@apgsg.com</li></ul></div>
+                <div class="info-section" id="faq-content"><h3>FAQ</h3><p><strong>Как присоединиться?</strong><br>Нажмите «Присоединиться» или используйте discord.gg/x7PH4TBJdt</p><p><strong>Как найти тиммейтов?</strong><br>Используйте #поиск-команды или голосовые каналы.</p></div>
                 <div class="info-section" id="feedback-content">
-                    <h3>Отправить отзыв</h3>
-                    <p>Мы ценим ваше мнение и постоянно работаем над улучшением нашего сообщества.</p>
-
-                    <div class="contact-form">
-                        <div class="form-group">
-                            <label for="feedback-type">Тип отзыва:</label>
-                            <select id="feedback-type">
-                                <option value="suggestion">Предложение</option>
-                                <option value="bug">Сообщение об ошибке</option>
-                                <option value="complaint">Жалоба</option>
-                                <option value="praise">Благодарность</option>
-                            </select>
+                    <h3>Отзывы и комментарии</h3>
+                    <div class="feedback-form">
+                        <div class="rating-input" id="ratingStars">
+                            <span class="star" data-value="1">☆</span>
+                            <span class="star" data-value="2">☆</span>
+                            <span class="star" data-value="3">☆</span>
+                            <span class="star" data-value="4">☆</span>
+                            <span class="star" data-value="5">☆</span>
+                            <span class="rating-value">0/5</span>
                         </div>
-
                         <div class="form-group">
-                            <label for="feedback-name">Ваше имя:</label>
-                            <input type="text" id="feedback-name" placeholder="Как к вам обращаться?">
+                            <textarea id="feedback-message" placeholder="Ваш комментарий..." rows="3" required></textarea>
                         </div>
-
-                        <div class="form-group">
-                            <label for="feedback-message">Сообщение:</label>
-                            <textarea id="feedback-message" placeholder="Опишите ваш отзыв подробно..."></textarea>
-                        </div>
-
-                        <button class="btn btn-primary" id="submit-feedback">Отправить отзыв</button>
+                        <button class="btn btn-primary" id="submitFeedback" disabled><i class="fas fa-paper-plane"></i> Отправить отзыв</button>
+                        <p class="auth-message"></p>
+                    </div>
+                    <div class="comments-list" id="commentsList">
+                        <div class="loading">Загрузка комментариев...</div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content fade-in">
-                <h2>Готов найти свою команду?</h2>
-                <p>Присоединяйся к нашему сообществу и начинай играть с новыми друзьями уже сегодня!</p>
-                <a href="https://discord.gg/x7PH4TBJdt" class="btn" target="_blank">Присоединиться к APGsG в Discord!</a>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <div class="footer-content">
+            <div class="footer-grid">
                 <div class="footer-info">
-                    <a href="#home" class="footer-logo">
-                        <img src="https://i.ibb.co/2YmkKV7G/source-v2.png" alt="APGsG" class="footer-logo-img">
-                        <span>APGsG</span>
-                    </a>
-                    <p style="color: var(--text-muted);">
-                        Крупнейшее игровое сообщество Discord, где каждый найдет свою команду и друзей.
-                    </p>
-                    <div class="social-links">
-                        <a href="https://discord.gg/x7PH4TBJdt" class="social-link" target="_blank">
-                            <i class="fab fa-discord"></i>
-                        </a>
-                    </div>
+                    <a href="#home" class="logo"><img src="https://i.ibb.co/2YmkKV7G/source-v2.png" alt="APGsG" class="logo-img"><span>APGsG</span></a>
+                    <p class="footer-desc">Крупнейшее игровое сообщество Discord.</p>
+                    <div class="social-links"><a href="https://discord.gg/x7PH4TBJdt" class="social-link" target="_blank"><i class="fab fa-discord"></i></a></div>
                 </div>
-
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Сообщество</h4>
-                        <ul>
-                            <li><a data-tab="about">О нас</a></li>
-                            <li><a data-tab="rules">Правила</a></li>
-                            <li><a data-tab="moderation">Модерация</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4>Игры</h4>
-                        <ul>
-                            <li><a href="#games">CS:GO</a></li>
-                            <li><a href="#games">Dota 2</a></li>
-                            <li><a href="#games">Apex Legends</a></li>
-                            <li><a href="#games">Overwatch 2</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4>Поддержка</h4>
-                        <ul>
-                            <li><a data-tab="help">Помощь</a></li>
-                            <li><a data-tab="contacts">Контакты</a></li>
-                            <li><a data-tab="faq">FAQ</a></li>
-                            <li><a data-tab="feedback">Отправить отзыв</a></li>
-                        </ul>
-                    </div>
+                <div class="footer-links-grid">
+                    <div class="footer-col"><h4>Сообщество</h4><ul><li><a data-tab="about">О нас</a></li><li><a data-tab="rules">Правила</a></li><li><a data-tab="moderation">Модерация</a></li></ul></div>
+                    <div class="footer-col"><h4>Игры</h4><ul><li><a href="#games">CS2</a></li><li><a href="#games">Dota 2</a></li><li><a href="#games">Valorant</a></li><li><a href="#games">Apex Legends</a></li></ul></div>
+                    <div class="footer-col"><h4>Поддержка</h4><ul><li><a data-tab="help">Помощь</a></li><li><a data-tab="contacts">Контакты</a></li><li><a data-tab="faq">FAQ</a></li><li><a data-tab="feedback">Отзыв</a></li></ul></div>
                 </div>
             </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2024 APGsG Gaming Community. Все права защищены.</p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2025 APGsG Gaming Community. Все права защищены.</p></div>
         </div>
     </footer>
 
-    <div class="scroll-to-top" id="scrollToTop">
-        <i class="fas fa-chevron-up"></i>
-    </div>
+    <button class="scroll-top-btn" id="scrollTop" aria-label="Наверх"><i class="fas fa-chevron-up"></i></button>
 
     <div class="game-popup" id="gamePopup">
-        <div class="game-popup-content">
-            <button class="game-popup-close" id="gamePopupClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="game-popup-icon">
-                <img id="popupGameImage" src="" alt="">
-            </div>
-            <h3 id="popupGameTitle">Название игры</h3>
-            <p id="popupGameDescription">Описание игры появится здесь</p>
-            <a href="https://discord.gg/x7PH4TBJdt" class="btn btn-primary" target="_blank">Найти команду</a>
+        <div class="popup-box">
+            <button class="popup-close" id="popupClose" aria-label="Закрыть"><i class="fas fa-times"></i></button>
+            <div class="popup-img"><img id="popupImg" src="" alt=""></div>
+            <h3 id="popupTitle">Игра</h3>
+            <p id="popupDesc">Описание</p>
+            <button class="btn btn-primary" id="connectToGame"><i class="fas fa-link"></i> Подключиться и получить роль</button>
+        </div>
+    </div>
+
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-panel-content">
+            <h3>Админ-панель</h3>
+            <div id="adminCommentsList"></div>
+            <button class="btn btn-secondary" id="closeAdmin">Закрыть</button>
         </div>
     </div>
 
     <script>
-        // ==================== ПРОСТЫЕ API-ЗАПРОСЫ ====================
+        // ⚙️ КОНФИГУРАЦИЯ (заполнить свои данные)
+        const CONFIG = {
+            CLIENT_ID: '911925216421236776',                   
+            REDIRECT_URI: 'http://marazmus.apgsg.ru',          
+            API_BASE_URL: 'https://ваш-сервер.ru/api',         // нету добавте адрес вашего бэкенда с эндпоинтом /assign-role
+            FEEDBACK_WEBHOOK_URL: 'https://discord.com/api/webhooks/...', // нету добавте вебхук для уведомлений об отзывах
+            STATS_API: {
+                online: 'http://fi3.bot-hosting.net:20207/MARAZMUS?question=PIOnline',
+                total: 'http://fi3.bot-hosting.net:20207/MARAZMUS?question=PITotal',
+                inGame: 'http://fi3.bot-hosting.net:20207/MARAZMUS?question=PIInGame'
+            },
+            ADMIN_IDS: ['1033615399763320862', '665566492158590976']  // ID администраторов
+        };
+
+        let currentUser = null;
+        let currentGame = null;
+        let comments = [];
+        let discordCode = null;
+
+        function loadUserFromStorage() {
+            const savedUser = localStorage.getItem('apgsg_user');
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                } catch (e) {
+                    localStorage.removeItem('apgsg_user');
+                }
+            }
+            const savedCode = localStorage.getItem('discord_code');
+            if (savedCode) {
+                discordCode = savedCode;
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            if (code) {
+                discordCode = code;
+                localStorage.setItem('discord_code', code);
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            updateAuthUI();
+        }
+
+        function login() {
+            const url = `https://discord.com/api/oauth2/authorize?client_id=${CONFIG.CLIENT_ID}&redirect_uri=${encodeURIComponent(CONFIG.REDIRECT_URI)}&response_type=code&scope=identify+guilds.join`;
+            window.location.href = url;
+        }
+
+        function logout() {
+            currentUser = null;
+            discordCode = null;
+            localStorage.removeItem('apgsg_user');
+            localStorage.removeItem('discord_code');
+            updateAuthUI();
+        }
+
+        function isAdmin() {
+            return currentUser && CONFIG.ADMIN_IDS.includes(currentUser.id);
+        }
+
+        function isBanned(userId) {
+            const banned = localStorage.getItem('banned_users');
+            const list = banned ? JSON.parse(banned) : [];
+            return list.includes(userId);
+        }
+
+        function updateAuthUI() {
+            const authSection = document.getElementById('authSection');
+            if (currentUser) {
+                authSection.innerHTML = `
+                    <div class="user-info" style="display:flex; align-items:center; gap:8px;">
+                        <img src="https://cdn.discordapp.com/avatars/${currentUser.id}/${currentUser.avatar || 'null'}.png" alt="avatar" style="width:28px; height:28px; border-radius:50%;" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+                        <span>${currentUser.username}</span>
+                        <button class="btn-logout" id="logoutBtn" style="background:rgba(255,255,255,0.1); border:1px solid var(--dark-border); color:var(--text-secondary); padding:6px 12px; border-radius:var(--radius-sm); cursor:pointer;">Выйти</button>
+                    </div>
+                `;
+                document.getElementById('logoutBtn').addEventListener('click', logout);
+                if (isAdmin()) {
+                    const adminLink = document.createElement('a');
+                    adminLink.href = '#';
+                    adminLink.innerText = 'Админ';
+                    adminLink.style.marginLeft = '10px';
+                    adminLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        openAdminPanel();
+                    });
+                    document.querySelector('.user-info').appendChild(adminLink);
+                }
+            } else if (discordCode) {
+                authSection.innerHTML = `
+                    <div class="user-info" style="display:flex; align-items:center; gap:8px;">
+                        <span style="color: var(--accent);">✅ Авторизовано</span>
+                        <button class="btn-logout" id="logoutBtn" style="background:rgba(255,255,255,0.1); border:1px solid var(--dark-border); color:var(--text-secondary); padding:6px 12px; border-radius:var(--radius-sm); cursor:pointer;">Выйти</button>
+                    </div>
+                `;
+                document.getElementById('logoutBtn').addEventListener('click', logout);
+            } else {
+                authSection.innerHTML = `<button class="btn btn-secondary" id="loginBtn"><i class="fab fa-discord"></i> Войти</button>`;
+                document.getElementById('loginBtn').addEventListener('click', login);
+            }
+
+            const submitBtn = document.getElementById('submitFeedback');
+            const authMsg = document.querySelector('.auth-message');
+            if (submitBtn) {
+                if (currentUser && !isBanned(currentUser.id)) {
+                    submitBtn.disabled = false;
+                    submitBtn.querySelector('i').className = 'fas fa-paper-plane';
+                    authMsg.textContent = '';
+                } else if (currentUser && isBanned(currentUser.id)) {
+                    submitBtn.disabled = true;
+                    authMsg.textContent = 'Вы забанены и не можете оставлять отзывы.';
+                } else {
+                    submitBtn.disabled = true;
+                    authMsg.textContent = 'Войдите через Discord, чтобы оставить отзыв.';
+                }
+            }
+        }
+
+        function initRatingStars() {
+            const stars = document.querySelectorAll('.rating-input .star');
+            const ratingValue = document.querySelector('.rating-value');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = parseInt(star.dataset.value);
+                    ratingValue.textContent = value + '/5';
+                    stars.forEach((s, index) => {
+                        if (index < value) s.classList.add('active');
+                        else s.classList.remove('active');
+                    });
+                });
+            });
+        }
+
+        function resetStars() {
+            document.querySelectorAll('.rating-input .star').forEach(s => s.classList.remove('active'));
+            document.querySelector('.rating-value').textContent = '0/5';
+        }
+
+        function loadComments() {
+            const saved = localStorage.getItem('apgsg_comments');
+            comments = saved ? JSON.parse(saved) : [
+                { id: '1', userId: 'admin', userName: 'Игрок123', rating: 5, comment: 'Отличный сервер!', date: '2025-03-14 15:30', banned: false },
+                { id: '2', userId: 'user2', userName: 'DotaFan', rating: 4, comment: 'Ребята отзывчивые.', date: '2025-03-13 10:15', banned: false },
+            ];
+            renderComments();
+            updateAverageRating();
+        }
+
+        function renderComments() {
+            const list = document.getElementById('commentsList');
+            const filtered = comments.filter(c => !c.banned);
+            if (filtered.length === 0) {
+                list.innerHTML = '<p class="loading">Пока нет отзывов. Будьте первым!</p>';
+                return;
+            }
+            list.innerHTML = filtered.map(c => `
+                <div class="comment-card" data-id="${c.id}">
+                    <div class="comment-header">
+                        <span class="comment-name">${escapeHtml(c.userName)}</span>
+                        <span class="comment-date">${c.date}</span>
+                    </div>
+                    <div class="comment-rating">${renderStars(c.rating)}</div>
+                    <div class="comment-text">${escapeHtml(c.comment)}</div>
+                    ${isAdmin() ? `
+                        <div class="admin-actions">
+                            <button class="btn-delete" onclick="deleteComment('${c.id}')">🗑️ Удалить</button>
+                            <button class="btn-ban" onclick="banUser('${c.userId}')">🔨 Забанить</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function renderStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += i <= rating ? '★' : '☆';
+            }
+            return `<span class="stars">${stars}</span>`;
+        }
+
+        function updateAverageRating() {
+            const valid = comments.filter(c => !c.banned);
+            if (valid.length === 0) {
+                document.getElementById('averageRating').textContent = '0.0';
+                return;
+            }
+            const sum = valid.reduce((acc, c) => acc + c.rating, 0);
+            const avg = (sum / valid.length).toFixed(1);
+            document.getElementById('averageRating').textContent = avg;
+        }
+
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe.replace(/[&<>"]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                if (m === '"') return '&quot;';
+                return m;
+            });
+        }
+
+        document.getElementById('submitFeedback').addEventListener('click', async function(e) {
+            e.preventDefault();
+            if (!currentUser) {
+                showNotif('🔒 Требуется вход', 'Войдите через Discord');
+                login();
+                return;
+            }
+            const rating = parseInt(document.querySelector('.rating-value').textContent);
+            if (rating < 1 || rating > 5) {
+                alert('Поставьте оценку от 1 до 5');
+                return;
+            }
+            const text = document.getElementById('feedback-message').value.trim();
+            if (!text) {
+                alert('Напишите комментарий');
+                return;
+            }
+            if (isBanned(currentUser.id)) {
+                showNotif('⛔ Вы забанены', 'Вы не можете оставлять отзывы');
+                return;
+            }
+            const newComment = {
+                id: Date.now().toString(),
+                userId: currentUser.id,
+                userName: currentUser.username,
+                rating: rating,
+                comment: text,
+                date: new Date().toLocaleString('ru-RU', { hour12: false }),
+                banned: false
+            };
+            comments.unshift(newComment);
+            if (comments.length > 50) comments.pop();
+            localStorage.setItem('apgsg_comments', JSON.stringify(comments));
+            renderComments();
+            updateAverageRating();
+            document.getElementById('feedback-message').value = '';
+            resetStars();
+            showNotif('✅ Спасибо!', 'Ваш отзыв добавлен');
+            try {
+                await fetch(CONFIG.FEEDBACK_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content: `**Новый отзыв**\n**Оценка:** ${rating}/5\n**От:** ${currentUser.username}\n**Сообщение:** ${text}`
+                    })
+                });
+            } catch (err) {
+                console.warn('Не удалось отправить в вебхук', err);
+            }
+        });
+
+        window.deleteComment = function(commentId) {
+            if (!isAdmin()) return;
+            comments = comments.filter(c => c.id !== commentId);
+            localStorage.setItem('apgsg_comments', JSON.stringify(comments));
+            renderComments();
+            updateAverageRating();
+        };
+
+        window.banUser = function(userId) {
+            if (!isAdmin()) return;
+            const banned = localStorage.getItem('banned_users');
+            const list = banned ? JSON.parse(banned) : [];
+            if (!list.includes(userId)) {
+                list.push(userId);
+                localStorage.setItem('banned_users', JSON.stringify(list));
+            }
+            comments = comments.map(c => c.userId === userId ? {...c, banned: true} : c);
+            localStorage.setItem('apgsg_comments', JSON.stringify(comments));
+            renderComments();
+            updateAverageRating();
+            showNotif('✅ Пользователь забанен', 'Его комментарии скрыты');
+        };
+
+        function openAdminPanel() {
+            if (!isAdmin()) return;
+            const panel = document.getElementById('adminPanel');
+            const list = document.getElementById('adminCommentsList');
+            list.innerHTML = comments.map(c => `
+                <div class="admin-comment-item">
+                    <strong>${escapeHtml(c.userName)}</strong> (${c.userId})<br>
+                    Оценка: ${c.rating}/5<br>
+                    ${escapeHtml(c.comment)}<br>
+                    <button onclick="deleteComment('${c.id}')">Удалить</button>
+                    <button onclick="banUser('${c.userId}')">Забанить</button>
+                </div>
+            `).join('');
+            panel.style.display = 'flex';
+        }
+
+        document.getElementById('closeAdmin').addEventListener('click', () => {
+            document.getElementById('adminPanel').style.display = 'none';
+        });
+
+        const FALLBACK_GAMES = [
+            { id: 'doom-eternal', name: 'Doom Eternal', image: 'https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg', description: 'Doom Eternal — динамичный шутер от первого лица.' },
+            { id: 'terraria', name: 'Terraria', image: 'https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg', description: 'Terraria — песочница с элементами RPG.' },
+            { id: 'factorio', name: 'Factorio', image: 'https://cdn.akamai.steamstatic.com/steam/apps/427520/header.jpg', description: 'Factorio — автоматизация и производство.' },
+            { id: 'among-us', name: 'Among Us', image: 'https://cdn.akamai.steamstatic.com/steam/apps/945360/header.jpg', description: 'Among Us — многопользовательская игра на дедукцию.' },
+            { id: 'barotruma', name: 'Barotruma', image: 'https://cdn.akamai.steamstatic.com/steam/apps/363970/header.jpg', description: 'Barotruma — симулятор подводной лодки.' },
+            { id: 'play-craft', name: 'Play Craft', image: 'https://via.placeholder.com/300x150?text=Play+Craft', description: 'Play Craft — креативная песочница.' },
+            { id: 'pubg', name: 'PUBG', image: 'https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg', description: 'PUBG — королевская битва.' },
+            { id: 'brick-rigs', name: 'Brick Rigs', image: 'https://cdn.akamai.steamstatic.com/steam/apps/552100/header.jpg', description: 'Brick Rigs — физическая песочница.' },
+            { id: 'war-thunder', name: 'War Thunder', image: 'https://cdn.akamai.steamstatic.com/steam/apps/236390/header.jpg', description: 'War Thunder — военный симулятор.' },
+            { id: 'team-fortress-2', name: 'Team Fortress 2', image: 'https://cdn.akamai.steamstatic.com/steam/apps/440/header.jpg', description: 'Team Fortress 2 — командный шутер.' },
+            { id: 'raft', name: 'Raft', image: 'https://cdn.akamai.steamstatic.com/steam/apps/648800/header.jpg', description: 'Raft — выживание в океане.' },
+            { id: 'scp', name: 'SCP', image: 'https://cdn.akamai.steamstatic.com/steam/apps/700330/header.jpg', description: 'SCP — хоррор от первого лица.' },
+            { id: 'minecraft', name: 'Minecraft', image: 'https://cdn.akamai.steamstatic.com/steam/apps/1672970/header.jpg', description: 'Minecraft — песочница.' },
+            { id: 'space-engineers', name: 'Space Engineers', image: 'https://cdn.akamai.steamstatic.com/steam/apps/244850/header.jpg', description: 'Space Engineers — космический симулятор.' },
+            { id: 'lethal-company', name: 'Lethal Company', image: 'https://cdn.akamai.steamstatic.com/steam/apps/1966720/header.jpg', description: 'Lethal Company — кооперативный хоррор.' },
+            { id: 'garrys-mod', name: "Garry's Mod", image: 'https://cdn.akamai.steamstatic.com/steam/apps/4000/header.jpg', description: "Garry's Mod — физическая песочница." },
+            { id: 'gta', name: 'GTA', image: 'https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg', description: 'Grand Theft Auto V — криминальный экшен.' },
+            { id: 'scrap-mechanic', name: 'Scrap Mechanic', image: 'https://cdn.akamai.steamstatic.com/steam/apps/387990/header.jpg', description: 'Scrap Mechanic — строительная игра.' },
+            { id: 'astroneer', name: 'ASTRONEER', image: 'https://cdn.akamai.steamstatic.com/steam/apps/361420/header.jpg', description: 'ASTRONEER — исследование планет.' },
+            { id: 'portal-2', name: 'Portal 2', image: 'https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg', description: 'Portal 2 — головоломка от первого лица.' },
+            { id: 'world-of-tanks', name: 'World of Tanks', image: 'https://cdn.akamai.steamstatic.com/steam/apps/1407200/header.jpg', description: 'World of Tanks — танковый симулятор.' },
+            { id: 'ksp', name: 'Kerbal Space Program', image: 'https://cdn.akamai.steamstatic.com/steam/apps/220200/header.jpg', description: 'Kerbal Space Program — космический симулятор.' },
+            { id: 'battlefield', name: 'Battlefield', image: 'https://cdn.akamai.steamstatic.com/steam/apps/1238810/header.jpg', description: 'Battlefield — серия военных шутеров.' },
+            { id: 'dont-starve-together', name: "Don't Starve Together", image: 'https://cdn.akamai.steamstatic.com/steam/apps/322330/header.jpg', description: "Don't Starve Together — кооперативное выживание." }
+        ];
+
+        async function loadGames() {
+            renderGames(FALLBACK_GAMES);
+            document.getElementById('gamesCount').textContent = FALLBACK_GAMES.length;
+        }
+
+        function renderGames(games) {
+            const grid = document.getElementById('gamesGrid');
+            grid.innerHTML = '';
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.dataset.game = game.id;
+                card.innerHTML = `
+                    <div class="game-thumb">
+                        <img src="${game.image}" alt="${game.name}" onerror="this.src='https://via.placeholder.com/300x150?text=${encodeURIComponent(game.name)}'">
+                        <div class="game-thumb-overlay"></div>
+                    </div>
+                    <div class="game-body"><h4>${game.name}</h4></div>
+                `;
+                card.addEventListener('click', () => openGamePopup(game));
+                grid.appendChild(card);
+            });
+        }
+
+        function openGamePopup(game) {
+            if (!discordCode && !currentUser) {
+                showNotif('🔒 Требуется вход', 'Сначала авторизуйтесь через Discord');
+                login();
+                return;
+            }
+            currentGame = game;
+            document.getElementById('popupImg').src = game.image;
+            document.getElementById('popupTitle').textContent = game.name;
+            document.getElementById('popupDesc').textContent = game.description;
+            document.getElementById('gamePopup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.getElementById('connectToGame').addEventListener('click', async function() {
+            if (!currentGame) return;
+            if (!discordCode && !currentUser) {
+                showNotif('🔒 Требуется вход', 'Сначала авторизуйтесь через Discord');
+                login();
+                return;
+            }
+            const btn = this;
+            const original = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Подключение...';
+            btn.disabled = true;
+
+            try {
+                const body = currentUser
+                    ? { userId: currentUser.id, gameId: currentGame.id }
+                    : { code: discordCode, gameId: currentGame.id };
+
+                const response = await fetch(`${CONFIG.API_BASE_URL}/assign-role`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.user) {
+                        currentUser = data.user;
+                        localStorage.setItem('apgsg_user', JSON.stringify(data.user));
+                        localStorage.removeItem('discord_code');
+                        discordCode = null;
+                    }
+                    showNotif('✅ Роль выдана!', `Теперь у вас есть роль для ${currentGame.name}. Добро пожаловать!`);
+                    document.getElementById('gamePopup').classList.remove('active');
+                    document.body.style.overflow = '';
+                    updateAuthUI();
+                } else {
+                    const error = await response.text();
+                    throw new Error(error);
+                }
+            } catch (err) {
+                console.error(err);
+                showNotif('❌ Ошибка', 'Не удалось получить роль. Возможно, вы не на сервере?');
+            } finally {
+                btn.innerHTML = original;
+                btn.disabled = false;
+            }
+        });
+
         async function fetchStats() {
             try {
-                // Прямые запросы к вашим API
-                const [onlineResponse, totalResponse, inGameResponse] = await Promise.all([
-                    fetch('http://fi3.bot-hosting.net:20207/MARAZMUS?question=PIOnline'),
-                    fetch('http://fi3.bot-hosting.net:20207/MARAZMUS?question=PITotal'),
-                    fetch('http://fi3.bot-hosting.net:20207/MARAZMUS?question=PIInGame')
+                const [onlineRes, totalRes, inGameRes] = await Promise.all([
+                    fetch(CONFIG.STATS_API.online),
+                    fetch(CONFIG.STATS_API.total),
+                    fetch(CONFIG.STATS_API.inGame)
                 ]);
-
-                const online = await onlineResponse.text();
-                const total = await totalResponse.text();
-                const inGame = await inGameResponse.text();
-
+                const online = parseInt(await onlineRes.text());
+                const total = parseInt(await totalRes.text());
+                const inGame = parseInt(await inGameRes.text());
                 return {
-                    online: parseInt(online) || 245,
-                    total: parseInt(total) || 833,
-                    inGame: parseInt(inGame) || 156
+                    online: isNaN(online) ? 245 : online,
+                    total: isNaN(total) ? 833 : total,
+                    inGame: isNaN(inGame) ? 156 : inGame
                 };
-            } catch (error) {
-                console.error('Ошибка загрузки статистики:', error);
-                // Возвращаем статические значения при ошибке
+            } catch (err) {
                 return { online: 245, total: 833, inGame: 156 };
             }
         }
 
-        function updateStatsDisplay(stats) {
-            const totalElement = document.getElementById('totalMembers');
-            const onlineElement = document.getElementById('onlineMembers');
-            const gamingElement = document.getElementById('gamingMembers');
-            const onlineTextElement = document.getElementById('onlineText');
-            const communityTotalElement = document.getElementById('communityTotal');
+        function animateNumber(el, target) {
+            if (!el) return;
+            const current = parseInt(el.textContent) || 0;
+            if (current === target) return;
+            const steps = 40;
+            const step = (target - current) / steps;
+            let frame = 0;
+            function tick() {
+                frame++;
+                if (frame >= steps) {
+                    el.textContent = target.toLocaleString('ru-RU');
+                    return;
+                }
+                el.textContent = Math.round(current + step * frame).toLocaleString('ru-RU');
+                requestAnimationFrame(tick);
+            }
+            tick();
+        }
 
-            if (totalElement) totalElement.textContent = stats.total;
-            if (onlineElement) onlineElement.textContent = stats.online;
-            if (gamingElement) gamingElement.textContent = stats.inGame;
-            if (onlineTextElement) onlineTextElement.textContent = `${stats.online} участников онлайн`;
-            if (communityTotalElement) communityTotalElement.textContent = stats.total;
-
-            const activityElement = document.getElementById('serverActivity');
-            if (activityElement) {
+        function updateStats(stats) {
+            animateNumber(document.getElementById('totalMembers'), stats.total);
+            animateNumber(document.getElementById('onlineMembers'), stats.online);
+            animateNumber(document.getElementById('gamingMembers'), stats.inGame);
+            animateNumber(document.getElementById('communityTotal'), stats.total);
+            const onlineText = document.getElementById('onlineText');
+            if (onlineText) onlineText.textContent = stats.online + ' участников онлайн';
+            const activity = document.getElementById('serverActivity');
+            if (activity) {
                 if (stats.online > 200) {
-                    activityElement.textContent = 'Очень высокая';
-                    activityElement.style.color = 'var(--accent)';
+                    activity.textContent = '🔥 Очень высокая';
+                    activity.style.background = 'rgba(0,245,212,0.1)';
+                    activity.style.color = '#00F5D4';
                 } else if (stats.online > 100) {
-                    activityElement.textContent = 'Высокая';
-                    activityElement.style.color = 'var(--accent)';
+                    activity.textContent = '⚡ Высокая';
+                    activity.style.background = 'rgba(0,245,212,0.1)';
+                    activity.style.color = '#00F5D4';
                 } else if (stats.online > 50) {
-                    activityElement.textContent = 'Средняя';
-                    activityElement.style.color = '#FFA500';
+                    activity.textContent = '📊 Средняя';
+                    activity.style.background = 'rgba(255,200,0,0.1)';
+                    activity.style.color = '#FFC800';
                 } else {
-                    activityElement.textContent = 'Низкая';
-                    activityElement.style.color = '#FF4444';
+                    activity.textContent = '💤 Низкая';
+                    activity.style.background = 'rgba(255,0,110,0.1)';
+                    activity.style.color = '#FF006E';
                 }
             }
         }
 
-        function initStatsUpdater() {
-            fetchStats().then(updateStatsDisplay);
-            setInterval(() => {
-                fetchStats().then(updateStatsDisplay);
-            }, 30000);
+        function initStats() {
+            fetchStats().then(updateStats);
+            setInterval(() => fetchStats().then(updateStats), 30000);
         }
 
-        // ==================== ВАШ ОРИГИНАЛЬНЫЙ JavaScript ====================
-        function initParticles() {
-            const container = document.getElementById('particlesContainer');
-            const particleCount = 30;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-
-                const size = Math.random() * 10 + 5;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-
-                particle.style.animationDelay = `${Math.random() * 15}s`;
-
-                const colors = ['#0066FF', '#00FF44', '#FFFFFF'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.background = color;
-
-                container.appendChild(particle);
-            }
+        function showNotif(title, text) {
+            const n = document.getElementById('notification');
+            n.querySelector('h4').textContent = title;
+            n.querySelector('p').textContent = text;
+            n.classList.add('active');
+            setTimeout(() => n.classList.remove('active'), 5000);
         }
 
-        function initThemeToggle() {
-            const themeToggle = document.getElementById('themeToggle');
-            const body = document.body;
-
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                body.classList.add('theme-light');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            }
-
-            themeToggle.addEventListener('click', () => {
-                body.classList.toggle('theme-light');
-
-                if (body.classList.contains('theme-light')) {
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                    localStorage.setItem('theme', 'light');
-                } else {
-                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                    localStorage.setItem('theme', 'dark');
-                }
-            });
-        }
-
-        function initMobileMenu() {
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const navLinks = document.getElementById('navLinks');
-
-            mobileMenuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                mobileMenuToggle.innerHTML = navLinks.classList.contains('active') ?
-                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-            });
-
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        function initGameSearch() {
+            document.getElementById('gameSearch').addEventListener('input', function(e) {
+                const q = e.target.value.toLowerCase();
+                document.querySelectorAll('.game-card').forEach(card => {
+                    const name = card.querySelector('h4').textContent.toLowerCase();
+                    card.style.display = name.includes(q) ? '' : 'none';
                 });
-            });
-        }
-
-        function initNotification() {
-            const notification = document.getElementById('notification');
-
-            setTimeout(() => {
-                notification.classList.add('active');
-            }, 2000);
-
-            setTimeout(() => {
-                notification.classList.remove('active');
-            }, 8000);
-
-            notification.addEventListener('click', () => {
-                notification.classList.remove('active');
             });
         }
 
         function initRandomTeam() {
-            const randomTeamBtn = document.getElementById('randomTeamBtn');
-            const games = [
-                'CS:GO', 'Dota 2', 'Apex Legends', 'Overwatch 2',
-                'Minecraft', 'Fortnite', 'Among Us', 'Valorant',
-                'League of Legends', 'PUBG', 'Rainbow Six Siege', 'World of Warcraft'
-            ];
-
-            randomTeamBtn.addEventListener('click', () => {
-                const randomGame = games[Math.floor(Math.random() * games.length)];
-                const message = `Случайная команда для игры: ${randomGame}! Загляни в канал #${randomGame.replace(/\s+/g, '-').toLowerCase()} на нашем Discord сервере!`;
-
-                const notification = document.getElementById('notification');
-                notification.querySelector('h4').textContent = 'Случайная команда!';
-                notification.querySelector('p').textContent = message;
-                notification.classList.add('active');
-
-                setTimeout(() => {
-                    notification.classList.remove('active');
-                }, 5000);
+            document.getElementById('randomTeamBtn').addEventListener('click', function() {
+                const cards = document.querySelectorAll('.game-card');
+                if (cards.length) cards[Math.floor(Math.random() * cards.length)].click();
             });
         }
 
-        function initGamePopup() {
-            const gameCards = document.querySelectorAll('.game-card');
-            const gamePopup = document.getElementById('gamePopup');
-            const gamePopupClose = document.getElementById('gamePopupClose');
-            const popupGameImage = document.getElementById('popupGameImage');
-            const popupGameTitle = document.getElementById('popupGameTitle');
-            const popupGameDescription = document.getElementById('popupGameDescription');
-
-            const gameDescriptions = {
-                csgo: "Counter-Strike: Global Offensive - тактический шутер, где команды террористов и контр-террористов сражаются за выполнение задач.",
-                dota2: "Dota 2 - многопользовательская онлайн-баталия в жанре MOBA с богатой стратегией и разнообразными героями.",
-                apex: "Apex Legends - королевская битва от создателей Titanfall с уникальными персонажами и быстрым геймплеем.",
-                overwatch: "Overwatch 2 - командный шутер с разнообразными героями, каждый со своими уникальными способностями.",
-                minecraft: "Minecraft - песочница с безграничными возможностями для творчества и приключений.",
-                fortnite: "Fortnite - королевская битва с элементами строительства и постоянно обновляемым контентом.",
-                amongus: "Among Us - социальная дедуктивная игра, где нужно выявить предателей среди членов экипажа.",
-                valorant: "Valorant - тактический шутер с персонажами, обладающими уникальными способностями.",
-                lol: "League of Legends - культовая MOBA с миллионами игроков по всему миру.",
-                pubg: "PlayerUnknown's Battlegrounds - реалистичная королевская битва с тактическим геймплеем.",
-                rainbow: "Rainbow Six Siege - тактический шутер с разрушаемостью окружения и глубокой стратегией.",
-                wow: "World of Warcraft - легендарная MMORPG с богатым миром и множеством активностей."
-            };
-
-            gameCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const gameId = card.getAttribute('data-game');
-                    const gameTitle = card.querySelector('h4').textContent;
-                    const gameImage = card.querySelector('img').src;
-
-                    popupGameImage.src = gameImage;
-                    popupGameTitle.textContent = gameTitle;
-                    popupGameDescription.textContent = gameDescriptions[gameId] || "Описание игры пока недоступно.";
-
-                    gamePopup.classList.add('active');
-                    document.body.style.overflow = 'hidden';
+        function initMobileMenu() {
+            const toggle = document.getElementById('mobileToggle');
+            const nav = document.getElementById('navLinks');
+            toggle.addEventListener('click', () => {
+                nav.classList.toggle('active');
+                toggle.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    nav.classList.remove('active');
+                    toggle.innerHTML = '<i class="fas fa-bars"></i>';
                 });
             });
-
-            gamePopupClose.addEventListener('click', () => {
-                gamePopup.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-
-            gamePopup.addEventListener('click', (e) => {
-                if (e.target === gamePopup) {
-                    gamePopup.classList.remove('active');
-                    document.body.style.overflow = 'auto';
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 1024) {
+                    nav.classList.remove('active');
+                    toggle.innerHTML = '<i class="fas fa-bars"></i>';
                 }
             });
         }
 
-        function initScrollToTop() {
-            const scrollToTopBtn = document.getElementById('scrollToTop');
-
+        function initHeader() {
             window.addEventListener('scroll', () => {
-                if (window.pageYOffset > 300) {
-                    scrollToTopBtn.classList.add('visible');
-                } else {
-                    scrollToTopBtn.classList.remove('visible');
-                }
+                document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
             });
+        }
 
-            scrollToTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
+        function initTheme() {
+            const btn = document.getElementById('themeToggle');
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('theme-light');
+                btn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            btn.addEventListener('click', () => {
+                document.body.classList.toggle('theme-light');
+                const isLight = document.body.classList.contains('theme-light');
+                btn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            });
+        }
+
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
                 });
-            });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-up, .stagger').forEach(el => observer.observe(el));
         }
 
-        function initHeaderScroll() {
-            const header = document.getElementById('header');
+        function initNotification() {
+            const n = document.getElementById('notification');
+            setTimeout(() => n.classList.add('active'), 2000);
+            setTimeout(() => n.classList.remove('active'), 8000);
+            n.addEventListener('click', () => n.classList.remove('active'));
+        }
 
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
+        function initScrollTop() {
+            const btn = document.getElementById('scrollTop');
+            window.addEventListener('scroll', () => btn.classList.toggle('visible', window.pageYOffset > 400));
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                });
             });
         }
 
         function initInfoTabs() {
             const tabs = document.querySelectorAll('.info-tab');
             const sections = document.querySelectorAll('.info-section');
-
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-
+                    const id = tab.dataset.tab;
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
-
-                    sections.forEach(section => {
-                        section.classList.remove('active');
-                        if (section.id === `${tabId}-content`) {
-                            section.classList.add('active');
-                        }
+                    sections.forEach(s => {
+                        s.classList.remove('active');
+                        if (s.id === id + '-content') s.classList.add('active');
                     });
                 });
             });
-
-            const footerLinks = document.querySelectorAll('.footer-column a[data-tab]');
-            footerLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
+            document.querySelectorAll('.footer-col a[data-tab]').forEach(link => {
+                link.addEventListener('click', e => {
                     e.preventDefault();
-                    const tabId = link.getAttribute('data-tab');
-
                     document.getElementById('info').scrollIntoView({ behavior: 'smooth' });
-
                     setTimeout(() => {
-                        const targetTab = document.querySelector(`.info-tab[data-tab="${tabId}"]`);
-                        if (targetTab) {
-                            targetTab.click();
-                        }
-                    }, 500);
-                });
-            });
-
-            const feedbackForm = document.getElementById('submit-feedback');
-            if (feedbackForm) {
-                feedbackForm.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const type = document.getElementById('feedback-type').value;
-                    const name = document.getElementById('feedback-name').value || 'Аноним';
-                    const message = document.getElementById('feedback-message').value;
-
-                    if (!message.trim()) {
-                        alert('Пожалуйста, введите сообщение');
-                        return;
-                    }
-
-                    alert(`Спасибо, ${name}! Ваш отзыв отправлен.`);
-
-                    document.getElementById('feedback-name').value = '';
-                    document.getElementById('feedback-message').value = '';
-                });
-            }
-        }
-
-        function initSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
+                        const tab = document.querySelector(`.info-tab[data-tab="${link.dataset.tab}"]`);
+                        if (tab) tab.click();
+                    }, 600);
                 });
             });
         }
 
-        function initScrollAnimation() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.fade-in, .stagger').forEach(el => {
-                observer.observe(el);
-            });
-        }
-
-        function initCardHover() {
-            document.querySelectorAll('.game-card, .feature-card, .step, .stat-card').forEach(card => {
-                card.addEventListener('mouseenter', function () {
-                    this.style.transform = 'translateY(-5px)';
-                });
-
-                card.addEventListener('mouseleave', function () {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-        }
-
-        // Базовая защита
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener('copy', function(e) {
-            e.preventDefault();
-        });
-
-        // Инициализация
-        window.addEventListener('load', () => {
-            initParticles();
-            initThemeToggle();
+        window.addEventListener('load', function() {
+            initHeader();
             initMobileMenu();
+            initTheme();
+            initScrollAnimations();
             initNotification();
-            initRandomTeam();
-            initGamePopup();
-            initScrollToTop();
-            initHeaderScroll();
-            initInfoTabs();
+            initScrollTop();
             initSmoothScroll();
-            initScrollAnimation();
-            initCardHover();
-            initStatsUpdater();
-        });
+            initInfoTabs();
+            initStats();
+            initGameSearch();
+            initRandomTeam();
+            initRatingStars();
+            loadGames();
+            loadComments();
+            loadUserFromStorage();
 
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.fade-in').forEach(el => {
-                el.classList.add('visible');
+            document.getElementById('popupClose').addEventListener('click', () => {
+                document.getElementById('gamePopup').classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            document.getElementById('gamePopup').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('gamePopup')) {
+                    document.getElementById('gamePopup').classList.remove('active');
+                    document.body.style.overflow = '';
+                }
             });
 
-            setTimeout(() => {
-                document.querySelectorAll('.stagger').forEach(el => {
-                    el.classList.add('visible');
-                });
-            }, 300);
+            document.querySelector('.footer-bottom p').innerHTML = 
+                `&copy; ${new Date().getFullYear()} APGsG Gaming Community. Все права защищены.`;
         });
     </script>
 </body>
